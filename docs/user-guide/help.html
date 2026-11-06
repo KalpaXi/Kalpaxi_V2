@@ -1,0 +1,1620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>KalpaXi Help</title>
+    <style>
+      :root {
+        --bg: #f7f8fa;
+        --paper: #ffffff;
+        --text: #1d2430;
+        --muted: #5d6878;
+        --line: #e2e6ec;
+        --accent: #1a8fd6;
+        --accent-soft: #e6f3fc;
+        --warn: #b4560b;
+        --warn-soft: #fff4e5;
+        --code: #f0f2f5;
+        --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14181d;
+          --paper: #1b2027;
+          --text: #dbe3ec;
+          --muted: #8d99a8;
+          --line: #2c343f;
+          --accent: #3fb6ff;
+          --accent-soft: #15293a;
+          --warn: #ffb35c;
+          --warn-soft: #2e2416;
+          --code: #222832;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 16px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 15px/1.6 Inter, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        max-width: 1320px;
+        margin: 0 auto;
+        gap: 28px;
+        padding: 24px;
+      }
+      nav {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        font-size: 14px;
+      }
+      nav .brand {
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      nav .logo {
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--accent);
+        border-radius: 3px;
+        transform: skewX(-12deg);
+      }
+      nav ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        counter-reset: s;
+      }
+      nav li {
+        counter-increment: s;
+      }
+      nav a {
+        display: block;
+        padding: 5px 10px;
+        border-radius: 6px;
+        color: var(--text);
+        text-decoration: none;
+      }
+      nav a::before {
+        content: counter(s) ". ";
+        color: var(--muted);
+      }
+      nav a:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      main {
+        min-width: 0;
+      }
+      header.hero {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 22px 26px;
+        margin-bottom: 22px;
+      }
+      header.hero h1 {
+        margin: 0 0 4px;
+        font-size: 28px;
+      }
+      header.hero p {
+        margin: 0;
+        color: var(--muted);
+      }
+      section {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 6px 26px 18px;
+        margin-bottom: 22px;
+      }
+      h2 {
+        font-size: 21px;
+        margin: 18px 0 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      h3 {
+        font-size: 16px;
+        margin: 20px 0 6px;
+      }
+      p {
+        margin: 6px 0 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0 14px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 7px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      kbd {
+        font: 12px var(--mono);
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        padding: 1px 5px;
+        white-space: nowrap;
+      }
+      .btn {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-radius: 5px;
+        padding: 0 6px;
+        white-space: nowrap;
+      }
+      ol.steps {
+        padding-left: 0;
+        list-style: none;
+        counter-reset: st;
+      }
+      ol.steps > li {
+        counter-increment: st;
+        position: relative;
+        padding: 4px 0 8px 38px;
+      }
+      ol.steps > li::before {
+        content: counter(st);
+        position: absolute;
+        left: 0;
+        top: 4px;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tip,
+      .warn {
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin: 10px 0 14px;
+        font-size: 14px;
+      }
+      .tip {
+        background: var(--accent-soft);
+        border-left: 3px solid var(--accent);
+      }
+      .warn {
+        background: var(--warn-soft);
+        border-left: 3px solid var(--warn);
+      }
+      .mouse-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 10px 0 16px;
+      }
+      .mouse-card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+      }
+      .mouse-card svg {
+        width: 64px;
+        height: 84px;
+      }
+      .mouse-card > b {
+        display: block;
+        font-size: 15px;
+      }
+      .mouse-card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .mouse-body {
+        fill: none;
+        stroke: var(--muted);
+        stroke-width: 2;
+      }
+      .mouse-hot {
+        fill: var(--accent);
+        opacity: 0.85;
+      }
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin: 10px 0 14px;
+      }
+      .flow a.step {
+        color: inherit;
+        text-decoration: none;
+      }
+      .flow a.step:hover {
+        border-color: var(--accent);
+      }
+      .lic-table td:nth-child(3) {
+        white-space: nowrap;
+      }
+      .thanks {
+        border: 1px solid var(--line);
+        border-left: 4px solid #3aa856;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin: 12px 0;
+      }
+      .flow span.step,
+      .flow a.step {
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .flow span.arrow {
+        color: var(--muted);
+      }
+      code {
+        font: 13px var(--mono);
+        background: var(--code);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+      .dim-demo {
+        font: 600 13px var(--mono);
+        border: 1px solid #d9a400;
+        color: #a77d00;
+        border-radius: 4px;
+        padding: 0 5px;
+      }
+      .dim-demo.free {
+        border-style: dashed;
+        color: var(--muted);
+        border-color: var(--muted);
+      }
+      @media (max-width: 820px) {
+        .layout {
+          grid-template-columns: 1fr;
+          padding: 14px;
+        }
+        nav {
+          position: static;
+        }
+        .mouse-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ver {
+        font-size: 13px;
+        color: var(--muted);
+        border-left: 3px solid var(--accent);
+        padding-left: 10px;
+      }
+      @media print {
+        nav {
+          display: none;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        section,
+        header.hero {
+          break-inside: avoid-page;
+        }
+      }
+      nav li.grp {
+        counter-increment: none;
+        margin: 12px 0 2px;
+        padding: 0 10px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .chapter {
+        margin: 34px 0 14px;
+        padding: 0 4px;
+      }
+      .chapter span {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .chapter p {
+        margin: 2px 0 0;
+        color: var(--muted);
+      }
+      figure.shot {
+        margin: 12px 0 18px;
+      }
+      figure.shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      figure.shot figcaption {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      figure.shot figcaption span {
+        opacity: 0.75;
+      }
+      nav {
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+      }
+      @media print {
+        figure.shot {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav>
+        <div class="brand"><span class="logo"></span>KalpaXi Help</div>
+        <ol>
+          <li class="grp">Getting started</li>
+          <li><a href="#about">What KalpaXi is</a></li>
+          <li><a href="#view">Moving around the 3D view</a></li>
+          <li class="grp">The toolbar</li>
+          <li><a href="#tb-files">Project, files, screen</a></li>
+          <li><a href="#tb-model">Modelling tools, status bar</a></li>
+          <li><a href="#tb-analysis">Analysis, undo, look, Help</a></li>
+          <li class="grp">Making a part</li>
+          <li><a href="#workflow">How a part is made</a></li>
+          <li><a href="#sketch">Making a sketch</a></li>
+          <li><a href="#edit">Editing a sketch</a></li>
+          <li><a href="#constraints">Constraints</a></li>
+          <li><a href="#dims">Dimensions</a></li>
+          <li><a href="#geometry">Making 3D geometry</a></li>
+          <li><a href="#solids">Solids: colour, name, lock</a></li>
+          <li class="grp">Assemblies and drawings</li>
+          <li><a href="#assembly">Assembly decks</a></li>
+          <li><a href="#section">Section view</a></li>
+          <li><a href="#massprops">Mass properties</a></li>
+          <li><a href="#drawing">Drawing</a></li>
+          <li class="grp">Analysis</li>
+          <li><a href="#fea">Mesh &amp; FEM</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#converge">Converge stress</a></li>
+          <li><a href="#fatigue">Fatigue (pyLife)</a></li>
+          <li><a href="#mold">Molding check</a></li>
+          <li><a href="#cfd">Flow and AI (frozen)</a></li>
+          <li class="grp">Reference</li>
+          <li><a href="#rightclick">Right-click menus</a></li>
+          <li><a href="#files">Saving, opening, exporting</a></li>
+          <li><a href="#keys">Keyboard shortcuts</a></li>
+          <li><a href="#problems">When something goes wrong</a></li>
+          <li><a href="#opensource">Open-source acknowledgements</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <header class="hero">
+          <h1>KalpaXi user guide</h1>
+          <p>Everything you need to model parts, put them together in an assembly, make the manufacturing drawing, mesh and analyse them (stress, heat, fatigue) and check them for injection molding.</p>
+          <p class="ver">Release 7 · updated 31 October 2026 — projects are saved as <code>.kxi</code>. The guide now follows the screen, with annotated pictures of every area. New: <a href="#threads">Threads</a>, extrude <b>both ways / up to a surface</b>, assembly <b>Insert, Smart mate, Groups</b>, the full <a href="#drawing">drawing bar</a>, <a href="#fea">per-solid materials, temperatures and heat generation</a>, element groups, <a href="#results">combining studies</a> and <a href="#converge">Converge stress</a>.</p>
+          <div class="flow modules">
+            <a class="step" href="#workflow">CAD — Form Space</a><span class="arrow">→</span>
+            <a class="step" href="#assembly">Assembly deck</a><span class="arrow">→</span>
+            <a class="step" href="#drawing">Drawing</a><span class="arrow">·</span>
+            <a class="step" href="#fea">Mesh&amp;FEM</a><span class="arrow">→</span>
+            <a class="step" href="#results">Results</a><span class="arrow">→</span>
+            <a class="step" href="#fatigue">Fatigue</a><span class="arrow">·</span>
+            <a class="step" href="#mold">Mold</a>
+          </div>
+        </header>
+
+        <div class="chapter" id="ch-start"><span>Getting started</span><p>What KalpaXi is, the window, and moving around.</p></div>
+
+        <section id="about">
+          <h2>What KalpaXi is</h2>
+          <p><b>KalpaXi</b> lets you design a part and check it in the same place. You sketch, model the part, assemble it and draw it, then mesh it and run stress, thermal and fatigue analyses. Before you cut metal or a mould, you can also check tolerances and injection-moulding rules. It runs in your web browser, on your own computer, and your files stay with you.</p>
+          <p>It is open-source <b>parametric CAD</b> with the <b>engineering checks built in</b>, all working on <b>one model</b>: change a size and everything that uses it follows. Nothing is uploaded — the project and every file the solvers write stay in your project folder.</p>
+          <p>We hope it helps creators model quickly and see how their design is going to work.</p>
+          <h3>What it can be used for</h3>
+          <ul>
+            <li><b>Designing parts</b> — machined, sheet-metal, molded or printed parts, from a sketch to a finished solid with fillets, chamfers, holes and threads.</li>
+            <li><b>Assemblies</b> — putting parts together with face-to-face constraints, looking inside with section views, exploded views, and checking whether the parts still fit at the ends of their tolerances.</li>
+            <li><b>Manufacturing drawings</b> — views, sections, details, dimensions with tolerances, weld symbols and a parts list, exported as PDF, SVG or DXF.</li>
+            <li><b>Engineering checks</b> — stress and deflection, temperatures and thermal stress, fatigue life, mass properties and injection-molding rules, early in the design, before anything is made.</li>
+            <li><b>Learning</b> — every input file is kept and readable, and results come with plain-language notes.</li>
+          </ul>
+          <h3>What it has</h3>
+          <table>
+            <tr><th>Area</th><th>Tools</th></tr>
+            <tr><td><a href="#sketch">Sketch</a></td><td>Lines, rectangles, circles, arcs, B-splines, points; trim, extend, join, fillet, offset, project; constraints and dimensions with a live count of the degrees of freedom.</td></tr>
+            <tr><td><a href="#geometry">Part modelling</a></td><td>Extrude / cut (one side, both sides or up to a surface), revolve, fillet (also variable), chamfer, shell, mirror, pattern, move, datum planes, metric threads M1–M24, STEP import.</td></tr>
+            <tr><td><a href="#solids">Several solids</a></td><td>Numbered solids with name, colour and lock; Boolean combine / subtract with several solids, cut by a plane or a line.</td></tr>
+            <tr><td><a href="#assembly">Assembly</a></td><td>Assembly decks, Insert, constraints, Smart mate, groups, explode, section views, tolerance study.</td></tr>
+            <tr><td><a href="#drawing">Drawing</a></td><td>Standard, projected, section, detail, broken and exploded views; automatic and manual dimensions; callouts, welds, balloons, bill of material; title block.</td></tr>
+            <tr><td><a href="#massprops">Mass properties</a></td><td>Volume, mass, centre of gravity, inertia, principal axes, materials.</td></tr>
+            <tr><td><a href="#fea">Mesh &amp; FEM</a></td><td>Gmsh tetrahedra, CalculiX: stress, thermal and thermal + stress, several solids with contacts, node and element groups.</td></tr>
+            <tr><td><a href="#results">Results</a></td><td>Contours, probes, sections, reactions, load-case combination, automatic stress convergence.</td></tr>
+            <tr><td><a href="#fatigue">Fatigue</a></td><td>pyLife: duty cycles, mean-stress models, S-N curves, Miner rules, rainflow; damage and life.</td></tr>
+            <tr><td><a href="#mold">Molding check</a></td><td>Wall thickness, draft, undercuts, ribs and bosses, gates and fill.</td></tr>
+          </table>
+          <h3>How it works</h3>
+          <ul>
+            <li>The <b>app</b> runs in the browser: the sketch solver (PlaneGCS), the geometry kernel (OpenCascade) and the 3D view (three.js) all run there.</li>
+            <li>A small <b>solver bridge</b> runs on your computer next to it and starts the programs that do the heavy work: <b>Gmsh</b> (mesh), <b>CalculiX</b> (stress and heat) and <b>Python with pyLife</b> (fatigue). Modelling works without it; the analyses need it.</li>
+            <li>A project is one small <code>.kxi</code> file holding the feature history; each study gets its own folder with the mesh, the input file and the results, so you can read them, rerun them or take them elsewhere.</li>
+          </ul>
+          <div class="flow">
+            <a class="step" href="#workflow">Sketch → part</a><span class="arrow">→</span>
+            <a class="step" href="#assembly">Assembly</a><span class="arrow">→</span>
+            <a class="step" href="#drawing">Drawing</a><span class="arrow">·</span>
+            <a class="step" href="#fea">Mesh &amp; FEM</a><span class="arrow">→</span>
+            <a class="step" href="#results">Results</a><span class="arrow">→</span>
+            <a class="step" href="#fatigue">Fatigue</a>
+          </div>
+          <h3>The KalpaXi window</h3>
+          <figure class="shot"><a href="help-img/00-screen-layout.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/00-screen-layout.webp" loading="lazy" alt="The KalpaXi window: toolbar, second row, model tree, 3D view, properties panel, tabs and status bar"></a><figcaption>The KalpaXi window: toolbar, second row, model tree, 3D view, properties panel, tabs and status bar <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Area</th><th>What it is for</th></tr>
+            <tr><td><b>Main toolbar</b> (top)</td><td>Files on the left, the modelling tools in the middle, analysis, checks, undo / redo, the look and Help on the right — see <a href="#tb-files">The toolbar</a>.</td></tr>
+            <tr><td><b>Second row</b></td><td>The sketch tools (they wake up when you sketch). During a step — depth, fillet, shell, section — it shows that step's controls and <span class="btn">Finish</span>. In an assembly deck or a drawing it holds their own tools.</td></tr>
+            <tr><td><b>Model tree and Solids</b> (left)</td><td>Every sketch and feature in the order it was made, and the numbered solids below — see <a href="#workflow">How a part is made</a>.</td></tr>
+            <tr><td><b>3D view</b> (middle)</td><td>The model. Left-drag rotates, right / middle drag pans, the wheel zooms; right-click for the menus.</td></tr>
+            <tr><td><b>Properties panel</b> (right)</td><td>The settings of what is selected. With nothing selected it shows the model's size and weight, a short <b>Getting started</b> and the <b>Mouse</b> buttons. Mesh &amp; FEM, Results and Fatigue use it for their panels.</td></tr>
+            <tr><td><b>Tabs</b> (bottom left)</td><td><b>Form Space</b> (where solids are made), the <b>assembly decks</b> and the <b>drawings</b>.</td></tr>
+            <tr><td><b>Status bar</b> (bottom)</td><td>Messages and hints for each step, the size of what is under the mouse, and the display switches.</td></tr>
+          </table>
+        </section>
+
+        <section id="view">
+          <h2>Moving around the 3D view</h2>
+          <div class="mouse-row">
+            <div class="mouse-card">
+              <svg viewBox="0 0 64 84" aria-hidden="true">
+                <rect class="mouse-body" x="6" y="4" width="52" height="76" rx="26" />
+                <path class="mouse-hot" d="M8 30 V28 a24 24 0 0 1 23 -23 V30 z" />
+                <path class="mouse-body" d="M32 4 V30 M6 30 H58" />
+              </svg>
+              <b>Rotate</b><span>Hold the <b>left</b> button and drag. While sketching or in any step with a bar (depth, move, shell, section, joints…) the left button does the work, so hold the <b>right</b> button and drag to rotate</span>
+            </div>
+            <div class="mouse-card">
+              <svg viewBox="0 0 64 84" aria-hidden="true">
+                <rect class="mouse-body" x="6" y="4" width="52" height="76" rx="26" />
+                <path class="mouse-hot" d="M33 5 a24 24 0 0 1 23 23 V30 H33 z" />
+                <path class="mouse-body" d="M32 4 V30 M6 30 H58" />
+              </svg>
+              <b>Pan</b><span>Hold the <b>right</b> button and drag in the part view; hold the <b>middle</b> button and drag anywhere. A middle <b>click</b> (no drag) = <b>Finish / Done</b> of the current step</span>
+            </div>
+            <div class="mouse-card">
+              <svg viewBox="0 0 64 84" aria-hidden="true">
+                <rect class="mouse-body" x="6" y="4" width="52" height="76" rx="26" />
+                <path class="mouse-body" d="M32 4 V30 M6 30 H58" />
+                <rect class="mouse-hot" x="28" y="11" width="8" height="15" rx="4" />
+              </svg>
+              <b>Zoom</b><span>Roll the <b>wheel</b> — it zooms towards the cursor</span>
+            </div>
+          </div>
+          <table>
+            <tr><th>Button (top-right of the view)</th><th>What it does</th></tr>
+            <tr><td><span class="btn">Iso</span> <span class="btn">Top</span> <span class="btn">Front</span> <span class="btn">Right</span></td><td>Jump to a standard view.</td></tr>
+            <tr><td><span class="btn">Fit</span> or <kbd>F</kbd></td><td>Zoom so the whole model fits on screen.</td></tr>
+            <tr><td>Project name (top right, under the buttons)</td><td>The name of the open project.</td></tr>
+            <tr><td><span class="btn">Grid</span> (status bar, bottom right)</td><td>Show or hide the grid. <span class="btn">Grid snap</span> next to it turns snapping to the grid on or off while sketching.</td></tr>
+            <tr><td><span class="btn">Normal</span> (sketch mode)</td><td>Look straight at the sketch plane.</td></tr>
+            <tr><td>Right-click a face or plane → <b>Normal view</b></td><td>Look straight at that face (a curved face: square to it where you clicked); the screen's "up" stays as it was.</td></tr>
+            <tr><td><span class="btn">Visual</span> (top right, next to Help)</td><td>Appearance of KalpaXi: <b>Default</b> (deep teal, matching the start-up picture — the standard look), <b>Dark</b>, <b>Gray</b> or <b>Bright</b> (panels, 3D view and sketch lines). Remembered next time.</td></tr>
+          </table>
+          <div class="tip">While sketching, the left button draws: rotate with the <b>right</b> button, pan with the <b>middle</b> button. The tabs at the bottom left of the view switch between the <b>Form Space</b> (modelling) and the <a href="#assembly">assembly decks</a>.</div>
+        </section>
+
+        <div class="chapter" id="ch-toolbar"><span>The toolbar</span><p>The buttons along the top, in three groups.</p></div>
+
+        <section id="tb-files">
+          <h2>The toolbar: project, files and the screen</h2>
+          <p>The toolbar has three groups: <b>project and files</b> at the left end (this section), the <a href="#tb-model">modelling tools</a> in the middle and the <a href="#tb-analysis">analysis, checks and look</a> at the right end.</p>
+          <figure class="shot"><a href="help-img/01-toolbar-files-and-screen.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/01-toolbar-files-and-screen.webp" loading="lazy" alt="Project and file buttons, and the parts of the screen around the model"></a><figcaption>Project and file buttons, and the parts of the screen around the model <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Button</th><th>What it does</th></tr>
+            <tr><td><span class="btn">New</span></td><td>Starts a new project. All the files of a project (the <code>.kxi</code> file and its study folders) are kept in its own project folder.</td></tr>
+            <tr><td><span class="btn">Open</span></td><td>Opens a saved project (<code>.kxi</code>).</td></tr>
+            <tr><td><span class="btn">Close</span></td><td>Closes the project and starts with an empty model (asks to save first).</td></tr>
+            <tr><td><span class="btn">Save</span> <kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Saves the project.</td></tr>
+            <tr><td><span class="btn">Save as</span></td><td>A new name or folder, or a STEP file — of the whole model or of one solid.</td></tr>
+            <tr><td><span class="btn">Import</span></td><td>Adds a STEP file (as a solid) or another <code>.kxi</code> project.</td></tr>
+            <tr><td><span class="btn">Export</span></td><td>STEP (solid), STL (3D printing), DXF (a sketch).</td></tr>
+          </table>
+          <p>Around the model:</p>
+          <ul>
+            <li><b>View buttons</b> (top right of the view): <span class="btn">Iso</span> <span class="btn">Top</span> <span class="btn">Front</span> <span class="btn">Right</span> and <span class="btn">Fit</span> (<kbd>F</kbd>); <span class="btn"># Solids</span> shows or hides the solid numbers. Under them, the <b>project name</b>.</li>
+            <li><b>Datum planes</b> XY, YZ, XZ — click one to start a sketch on it (<span class="btn">Planes</span> in the status bar shows or hides them).</li>
+            <li><b>Axis triad</b> (bottom right): the X, Y, Z directions as you turn the view.</li>
+            <li><b>Tabs</b>: <b>Form Space</b> (make and edit the solids), <b>Assembly +</b> (add an assembly deck), <b>Drawing +</b> (add a 2D drawing).</li>
+          </ul>
+          <p>More about the save, open and export windows: <a href="#files">Saving, opening, exporting</a>.</p>
+        </section>
+
+        <section id="tb-model">
+          <h2>The toolbar: modelling tools and the status bar</h2>
+          <p>The middle of the toolbar holds the tools that make and change the solids. They work in the Form Space; while you sketch or are in a step they wait until you finish.</p>
+          <figure class="shot"><a href="help-img/02-toolbar-modelling-and-status.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/02-toolbar-modelling-and-status.webp" loading="lazy" alt="The modelling tools of the main toolbar, Threads at the right of the second row, and the status bar"></a><figcaption>The modelling tools of the main toolbar, Threads at the right of the second row, and the status bar <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Tool</th><th>What it does</th></tr>
+            <tr><td><span class="btn">Sketch</span> <kbd>K</kbd></td><td>A new sketch on a plane or a flat face — <a href="#sketch">Making a sketch</a>.</td></tr>
+            <tr><td><span class="btn">Extrude</span> <kbd>E</kbd> · <span class="btn">Cut</span></td><td>Pull a sketch into a solid, or remove material with it: depth, flip, both sides, up to a surface.</td></tr>
+            <tr><td><span class="btn">Revolve</span></td><td>Turn a sketch around an axis.</td></tr>
+            <tr><td><span class="btn">Fillet</span> · <span class="btn">Chamfer</span></td><td>Round edges (also R1 → R2 along an edge) · bevel edges (equal, two distances, distance + angle).</td></tr>
+            <tr><td><span class="btn">Shell</span></td><td>Hollow a solid: faces to open, wall thickness.</td></tr>
+            <tr><td><span class="btn">Boolean</span></td><td>Combine or subtract solids (several at once), or cut a solid by a surface.</td></tr>
+            <tr><td><span class="btn">Mirror</span> · <span class="btn">Pattern</span></td><td>Copy a solid about a plane · repeat a feature or solid in a row or a circle.</td></tr>
+            <tr><td><span class="btn">Explode</span></td><td>Assembly decks only: spread the parts apart.</td></tr>
+            <tr><td><span class="btn">Threads</span> (right end of the second row)</td><td>Select a hole or a shaft face, then M1 … M24: a hole gets the tap drill Ø, a shaft the nominal Ø.</td></tr>
+          </table>
+          <p>How each tool is used: <a href="#geometry">Making 3D geometry</a>.</p>
+          <h3>The status bar</h3>
+          <table>
+            <tr><th>Item</th><th>What it does</th></tr>
+            <tr><td>Messages (left)</td><td>Hints and results of each step; the size of what is under the mouse (edge length, radius, face area).</td></tr>
+            <tr><td><span class="btn">Planes</span></td><td>Show or hide the XY, YZ, XZ planes.</td></tr>
+            <tr><td><span class="btn">Auto locate</span></td><td>Each new sketch shape gets a locating dimension.</td></tr>
+            <tr><td><span class="btn">Dimensions</span></td><td>Show the sizes of lines, circles and arcs in sketches.</td></tr>
+            <tr><td><span class="btn">Grid</span> · <span class="btn">Grid snap</span></td><td>Show the grid · snap to it while sketching.</td></tr>
+          </table>
+        </section>
+
+        <section id="tb-analysis">
+          <h2>The toolbar: analysis, checks, undo, look and Help</h2>
+          <figure class="shot"><a href="help-img/03-toolbar-analysis-and-tools.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/03-toolbar-analysis-and-tools.webp" loading="lazy" alt="The right end of the toolbar: section view, the analyses, the molding check, undo / redo, Visual and Help"></a><figcaption>The right end of the toolbar: section view, the analyses, the molding check, undo / redo, Visual and Help <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Button</th><th>What it is for</th></tr>
+            <tr><td><span class="btn">Section</span></td><td>Cut the model open to look inside — up to 4 sections, in the model, the assembly decks and the results (<a href="#section">Section view</a>).</td></tr>
+            <tr><td><span class="btn">Mesh&amp;FEM</span></td><td>Meshes a solid (Gmsh) and solves it (CalculiX): <b>stress</b>, <b>thermal</b> or <b>thermal + stress</b>, with supports, forces, pressures, gravity, temperatures, convection, heat flux, radiation and heat generation (<a href="#fea">Mesh &amp; FEM</a>).</td></tr>
+            <tr><td><span class="btn">Results</span></td><td>Plots the results of any study of the project — displacement, stresses, safety factor, temperature — and adds load cases together (<a href="#results">Results</a>).</td></tr>
+            <tr><td><span class="btn">Fatigue</span></td><td>Turns the stress studies into fatigue damage and life with pyLife (<a href="#fatigue">Fatigue</a>).</td></tr>
+            <tr><td><span class="btn">Flow</span> · <span class="btn">AI</span></td><td>CFD set-up for SU2 and an AI assistant — built, frozen in this release (<a href="#cfd">Flow and AI</a>).</td></tr>
+            <tr><td><span class="btn">Mold</span></td><td>Injection-molding check: walls, draft, undercuts, ribs, gates (<a href="#mold">Molding check</a>).</td></tr>
+            <tr><td>Undo / Redo</td><td>A step back or forward — <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd>.</td></tr>
+            <tr><td><span class="btn">Visual</span></td><td>The look of KalpaXi: Default, Dark, Gray or Bright.</td></tr>
+            <tr><td><span class="btn">Help</span> <kbd>F1</kbd></td><td>This guide.</td></tr>
+          </table>
+          <p>In short, the analysis chain is: <b>Mesh&amp;FEM</b> sets up a study on a solid (or several solids of an assembly) — material, supports, loads, mesh — and runs CalculiX. <b>Results</b> shows any study that has run, also after the project is reopened, and can add several studies together with factors. <b>Fatigue</b> takes one or more of those stress studies as load cases, each with its load range, number of cycles and mean-stress model, and gives the damage and life at every node. <b>Mold</b> checks a solid against injection-molding rules and colours the part where a rule is not met. Each has its own chapter below.</p>
+        </section>
+
+        <div class="chapter" id="ch-part"><span>Making a part</span><p>From a sketch to a finished solid.</p></div>
+
+        <section id="workflow">
+          <h2>How a part is made</h2>
+          <p>Every solid starts as a flat 2D drawing (a <b>sketch</b>) that is turned into 3D by a <b>feature</b>.</p>
+          <div class="flow">
+            <span class="step">1 · Sketch on a plane</span><span class="arrow">→</span>
+            <span class="step">2 · Draw a closed shape</span><span class="arrow">→</span>
+            <span class="step">3 · Add dimensions</span><span class="arrow">→</span>
+            <span class="step">4 · Finish</span><span class="arrow">→</span>
+            <span class="step">5 · Extrude / Revolve</span><span class="arrow">→</span>
+            <span class="step">6 · Sketch on a face, cut, fillet…</span>
+          </div>
+          <p>The left-hand <b>Model</b> list keeps the full history. Click a feature to change its values in the right-hand panel, double-click it to edit it; the part rebuilds automatically.</p>
+                  <h3>The left side: Model tree and Solids</h3>
+          <figure class="shot"><a href="help-img/04-left-side-model-and-solids.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/04-left-side-model-and-solids.webp" loading="lazy" alt="The Model tree, the Solids list with its buttons — and how to find the feature that made a face"></a><figcaption>The Model tree, the Solids list with its buttons — and how to find the feature that made a face <span>· click to enlarge</span></figcaption></figure>
+          <ul>
+            <li><b>Model</b> lists every sketch and feature in build order. Click one: its settings open in the right panel. Double-click: edit it (a sketch opens, an extrude shows its depth handle). Right-click: more commands. The <b>eye</b> hides or shows a sketch, or switches a feature off (suppress) and on; the <b>bin</b> deletes it.</li>
+            <li><b>Solids</b> lists each separate solid with the number shown on the model. Click a solid for its properties; right-click it to rename, colour, lock and more. Its five buttons: <b>hide / show</b>, <b>transparent</b>, <b>lock</b>, <b>export</b> (that solid alone, STEP or <code>.kxi</code>) and <b>delete</b> (with the features that make it, after asking) — see <a href="#solids">Solids: colour, name, lock</a>.</li>
+          </ul>
+          <div class="tip"><b>Which sketch or extrude made this face?</b> ① Click the face in the view: it turns orange. ② The feature that made it and its sketch light up <b>orange</b> in the Model tree. ③ The status bar names them, e.g. “Made by Extrude2 (Sketch2)”. Double-click the lit feature to change it.</div>
+          <h3>Right-click on a face, the second row and the right panel</h3>
+          <figure class="shot"><a href="help-img/05-right-click-second-row-and-right-panel.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/05-right-click-second-row-and-right-panel.webp" loading="lazy" alt="Right-click menu of a face, the sketch tools in the second row, and the right-hand panel"></a><figcaption>Right-click menu of a face, the sketch tools in the second row, and the right-hand panel <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Right-click a face</th><th>What it does</th></tr>
+            <tr><td>New sketch on this face · Normal view · Create a plane…</td><td>Sketch on the face, look straight at it, or make a datum plane from it.</td></tr>
+            <tr><td>Extrude this face · Cut into this face</td><td>Pull the face out or push it in — then drag or type the depth.</td></tr>
+            <tr><td>Move this solid…</td><td>Slide the solid with the mouse or type X, Y, Z.</td></tr>
+            <tr><td>Boolean with another solid… · Cut another solid with this face's plane…</td><td>Combine or subtract with other solids; cut another solid with the face's plane.</td></tr>
+            <tr><td>Mirror this solid… · Pattern this solid…</td><td>Copy the solid about a plane, or in a row or a circle.</td></tr>
+            <tr><td>Properties</td><td>Material, manufacturing method, mass, centre of gravity, inertia (<a href="#massprops">Mass properties</a>).</td></tr>
+            <tr><td>Face colour · Solid colour</td><td>Colour the face or the whole solid; the striped swatch = back to the default.</td></tr>
+          </table>
+          <p>The <b>second row</b> holds the sketch tools. They wake up in a sketch: on the left the <b>step label</b> (what you are doing now) and <span class="btn">Finish</span>, then the <b>Draw</b>, <b>Edit</b>, <b>Constraints</b> and <b>Dimensions</b> groups — each described in the sections below. A ▾ next to a button opens more tools of that kind. <span class="btn">Threads</span> sits at the right end and works outside a sketch.</p>
+          <p>The <b>right panel</b>, with nothing selected, shows: <b>Solid body</b> — the volume, surface area, size in X, Y, Z and the mass if it were printed in PLA (of the whole model); <b>Getting started</b> — the four steps to a first part (sketch, draw and dimension, finish, extrude); and <b>Mouse</b> — what the buttons do in the view. When something is selected it shows that item's settings instead.</p>
+        </section>
+
+        <section id="sketch">
+          <h2>Making a sketch</h2>
+          <h3>Start a sketch</h3>
+          <ol class="steps">
+            <li>Click <span class="btn">Sketch</span> in the toolbar (or press <kbd>K</kbd>).</li>
+            <li>Click one of the three origin planes — <b>XY</b> (top), <b>XZ</b> (front), <b>YZ</b> (right) — or a <b>flat face</b> of the solid. The buttons in the right panel pick a plane too.</li>
+            <li>A grid appears on the plane and the <b>Line</b> tool is ready. The view stays as it was — press <span class="btn">Normal</span> (top right) to look straight at the plane. The sketch tools are in the <b>second bar under the main toolbar</b> (always there, frozen until you sketch), with the sketch's name and plane on the left and <span class="btn">Finish</span> at <b>both ends</b>. The main toolbar stays in view but is locked until you finish — only <span class="btn">Help</span> and <span class="btn">Visual</span> still work.</li>
+          </ol>
+          <div class="tip"><b>Turning the view while sketching:</b> hold the <b>right</b> button and drag (any tool) — the tool you had stays on afterwards. You keep drawing on the sketch plane in the turned view: points land on the plane where you click. <span class="btn">Normal</span> turns it back square to the sketch.</div>
+          <div class="tip"><b>Quicker:</b> left-click a flat face or plane (it turns orange), then right-click → <b>New sketch on this face</b>.</div>
+
+          <h3>Drawing tools</h3>
+          <table>
+            <tr><th>Tool</th><th>Key</th><th>How to draw</th></tr>
+            <tr><td>Line</td><td><kbd>L</kbd></td><td>Click a start point, then each next point. Keeps going as a chain; <kbd>Esc</kbd> or right-click ends it. Clicking the first point closes the shape.</td></tr>
+            <tr><td>Rectangle</td><td><kbd>R</kbd></td><td>Click two opposite corners.</td></tr>
+            <tr><td>Circle</td><td><kbd>C</kbd></td><td>Click the centre, then a point on the rim.</td></tr>
+            <tr><td>Circle 3P</td><td></td><td>Click three points on the circle.</td></tr>
+            <tr><td>Arc 3P</td><td><kbd>A</kbd></td><td>Click the start, the end, then a point the arc passes through.</td></tr>
+            <tr><td>Arc Ctr</td><td></td><td>Click the centre, the start (sets the radius), then the end (anticlockwise).</td></tr>
+            <tr><td>B-spline</td><td><kbd>B</kbd></td><td>Click control points; <kbd>Enter</kbd>, double-click or right-click to finish. Click the first point again to close it.</td></tr>
+            <tr><td>Point</td><td><kbd>P</kbd></td><td>A single point, handy for dimensions and constraints.</td></tr>
+          </table>
+          <h3>Helpers while drawing</h3>
+          <ul>
+            <li><b>Snapping</b> — the cursor jumps to existing points (they join), onto lines/circles (the point stays on them) and to the grid. Turn grid snapping off with <span class="btn">Grid snap</span> in the status bar.</li>
+            <li><b>Horizontal / vertical</b> — a line drawn within 3° of level or upright snaps straight and gets an H or V marker.</li>
+            <li><b>Closed shapes are shaded blue</b> — only shaded areas become solid.</li>
+            <li><b>Construction lines</b> (<kbd>G</kbd> on selected curves) are dashed helpers that don't become solid — useful as a revolve axis or a reference.</li>
+          </ul>
+          <h3>Finish</h3>
+          <p>Click <span class="btn">Finish</span> (at either end of the sketch bar), click the <b>middle</b> mouse button, press <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, or right-click → <b>Finish sketch</b>. The sketch tools freeze again and the main toolbar works. To change a sketch later, double-click it in the Model list. The eye button in the list hides or shows a sketch (or switches a feature off); the bin deletes it.</p>
+        </section>
+
+        <section id="edit">
+          <h2>Editing a sketch</h2>
+          <table>
+            <tr><th>Action</th><th>How</th></tr>
+            <tr><td>Select</td><td><kbd>S</kbd>, then click; <kbd>Shift</kbd>+click adds to the selection.</td></tr>
+            <tr><td>Move</td><td>Drag a point, a line or a circle's rim. Constraints and locked dimensions are kept while you drag.</td></tr>
+            <tr><td>Join points</td><td>Drag a point onto another point (they become one) or onto a line/circle (it stays on it).</td></tr>
+            <tr><td>Delete</td><td>Select and press <kbd>Del</kbd>.</td></tr>
+            <tr><td>Trim <kbd>X</kbd></td><td>Click the piece of a curve to cut away; it is removed up to the nearest crossings (shown red first).</td></tr>
+            <tr><td>Extend <kbd>W</kbd></td><td>Click near the end of a line/arc; it stretches to the next curve it would hit.</td></tr>
+            <tr><td>Join corner <kbd>J</kbd></td><td>Click two curves; both are extended or trimmed to meet in a sharp corner.</td></tr>
+            <tr><td>Project <kbd>U</kbd></td><td>Copies an edge of the solid (or a curve of another sketch) into this sketch as fixed geometry.</td></tr>
+            <tr><td>Undo / Redo</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td></tr>
+          </table>
+          <div class="tip">Right-click anywhere in a sketch for a menu with <b>every</b> sketch command.</div>
+        </section>
+
+        <section id="constraints">
+          <h2>Constraints</h2>
+          <p>Constraints are rules the sketch must obey. Select the items first, then click the button (or press the key).</p>
+          <table>
+            <tr><th>Constraint</th><th>Key</th><th>Select</th></tr>
+            <tr><td>Coincident</td><td></td><td>Two points (they become one)</td></tr>
+            <tr><td>On curve</td><td><kbd>O</kbd></td><td>A point and a line/circle/arc</td></tr>
+            <tr><td>Horizontal / Vertical</td><td><kbd>H</kbd> / <kbd>V</kbd></td><td>Lines (or two points)</td></tr>
+            <tr><td>Parallel / Perpendicular</td><td></td><td>Two lines</td></tr>
+            <tr><td>Tangent</td><td><kbd>T</kbd></td><td>A line and a circle/arc, or two circles/arcs</td></tr>
+            <tr><td>Equal</td><td><kbd>E</kbd></td><td>Two or more lines, or circles/arcs</td></tr>
+            <tr><td>Fix</td><td></td><td>Points or curves to pin in place</td></tr>
+          </table>
+          <p>The status bar shows how many <b>degrees of freedom</b> are left. At 0 the sketch turns <b style="color: #3aa856">green — fully constrained</b>. A constraint that would contradict the others is refused, so the sketch never breaks.</p>
+        </section>
+
+        <section id="dims">
+          <h2>Dimensions</h2>
+          <h3>Sizes are shown automatically</h3>
+          <p>Every line shows its length, every circle its diameter (Ø) and every arc its radius (R). These are <b>unlocked</b> <span class="dim-demo free">25 🔓</span> — they follow the shape as you drag it.</p>
+
+          <h3>Change a size</h3>
+          <ol class="steps">
+            <li><b>Double-click</b> the number.</li>
+            <li>Type the new value and press <kbd>Enter</kbd>. Simple maths works too, e.g. <code>25.4*2</code>.</li>
+            <li>The shape resizes to match.</li>
+          </ol>
+
+          <h3>Lock a size</h3>
+          <p>Click the small <b>lock icon</b> on the label. A <b>locked</b> dimension <span class="dim-demo">25 🔒</span> is enforced: dragging can't change it and it can't be edited until you click the lock again to unlock it.</p>
+
+          <h3>Dimension tools</h3>
+          <table>
+            <tr><th>Tool</th><th>Key</th><th>Pick</th></tr>
+            <tr><td><span class="btn">Dim</span></td><td><kbd>D</kbd></td><td>A line → its length; a circle → diameter; an arc → radius; two points, a point and a line, or two parallel lines → the distance between them; two lines → the angle.</td></tr>
+            <tr><td><span class="btn">H dim</span></td><td><kbd>Shift</kbd>+<kbd>H</kbd></td><td>Distance measured <b>horizontally</b>: one line → its width; two items → their horizontal spacing.</td></tr>
+            <tr><td><span class="btn">V dim</span></td><td><kbd>Shift</kbd>+<kbd>V</kbd></td><td>Distance measured <b>vertically</b>: one line → its height; two items → their vertical spacing.</td></tr>
+            <tr><td><span class="btn">Angle</span></td><td><kbd>N</kbd></td><td>One line → its angle from horizontal; two lines → the angle between them.</td></tr>
+          </table>
+          <p>With nothing selected, press the key (or button) and then click the items. Click the first item and then empty space to dimension a single line. With items already selected, the key applies straight away.</p>
+          <div class="tip"><b>Dimension to the solid:</b> when sketching on a face, the solid's edges in that plane show as purple dotted lines. You can pick them like your own lines, e.g. "hole centre 15 mm from the edge".</div>
+          <div class="tip"><b>Auto locate</b> (status bar): each new, unconnected shape gets an unlocked dimension placing it from the nearest existing point or line. Lock it to fix the position.</div>
+        </section>
+
+        <section id="geometry">
+          <h2>Making 3D geometry</h2>
+          <table>
+            <tr><th>Feature</th><th>What it does</th><th>Settings (right panel)</th></tr>
+            <tr><td><span class="btn">Extrude</span> <kbd>E</kbd></td><td>Pushes the closed shapes of a sketch into a solid.</td><td>Sketch, distance, direction (along the normal / reversed / both sides), operation: <b>Add (join)</b>, <b>New solid (separate)</b>, <b>Cut</b>, <b>Intersect</b>.</td></tr>
+            <tr><td><span class="btn">Cut</span></td><td>Same as Extrude but removes material (starts reversed, into the solid).</td><td>As Extrude.</td></tr>
+            <tr><td><span class="btn">Revolve</span></td><td>Spins a shape around an axis (a pulley, a cup…).</td><td>Axis: the sketch's horizontal or vertical axis, or any line in the sketch (a construction line is ideal); angle (360 = full turn).</td></tr>
+            <tr><td><span class="btn">Fillet</span></td><td>Rounds edges.</td><td>Radius — typed, or <b>hold the left button and drag</b> away from an edge. Click edges to add / remove them, then <span class="btn">Done</span>. <b>Variable radius</b>: R1 and R2 at the two ends of one edge (below).</td></tr>
+            <tr><td><span class="btn">Chamfer</span></td><td>Bevels edges.</td><td>Type: <b>Equal distance</b>, <b>Two distances (D1 × D2)</b> or <b>Distance + angle</b>; sizes typed or dragged (below).</td></tr>
+            <tr><td><span class="btn">Shell</span></td><td>Hollows the solid, leaving walls, with the faces you pick left open.</td><td>Wall thickness — typed or dragged; faces to open (below).</td></tr>
+            <tr><td>Create a plane</td><td>Right-click a flat or curved face → <b>Create a plane…</b>: a reference plane to sketch on.</td><td>Turn it about an axis by dragging, align to X / Y / Z, set an angle, or click a straight edge as the axis.</td></tr>
+            <tr><td>Extrude / Cut this face</td><td>Right-click a flat face: pulls it out 10 mm or pushes it in 5 mm.</td><td>Distance, direction.</td></tr>
+            <tr><td>Move solid</td><td>Right-click a face → <b>Move this solid…</b>, then drag it with the left button (see below).</td><td>Move X / Y / Z (mm) in the bar; rotation about X, Y or Z in the panel afterwards.</td></tr>
+            <tr><td><span class="btn">Boolean</span></td><td>Combines solids into one, subtracts solids from another, or <b>cuts a solid in two along a plane or a sketched line</b>. The result is a <b>new solid with a new number</b>.</td><td>Combine / Subtract / Cut by surface, the solids, the cutting plane or line, keep or delete each original (see below).</td></tr>
+            <tr><td><span class="btn">Import</span></td><td>Brings in a STEP file as a solid.</td><td>Add / new solid / cut / intersect.</td></tr>
+          </table>
+          <h3>Extrude both ways, or up to a surface</h3>
+          <ul>
+            <li><b>Both</b> (in the depth bar or the extrude's panel): the shape goes out on both sides of the sketch; <b>Depth 2</b> sets the other side's depth (empty = the same as Depth).</li>
+            <li><b>To surface</b>: click the face the extrude (or cut) should run up to. A flat face is used as its whole plane, a curved face as it is. The panel shows <b>Extends to</b> with the face; <b>Change…</b> picks another face, <b>Distance</b> goes back to a typed depth.</li>
+            <li>From a sketch on a solid's face the extrude asks: <b>Join Solid N</b>, <b>New separate solid</b> or <b>Join to another solid…</b> (click it). If the new shape does not touch the solid it should join, KalpaXi warns “two solids are formed due to non continuity”.</li>
+          </ul>
+          <h3 id="threads">Threads (ISO metric M1 – M24)</h3>
+          <ol class="steps">
+            <li>Click the round face of a <b>hole</b> or a <b>shaft</b> (outside a sketch).</li>
+            <li><span class="btn">Threads</span> (right end of the second row). The window lists M1 … M24 with pitch, tap drill Ø and nominal Ø (second-choice sizes marked 2nd).</li>
+            <li>Pick a size. A <b>hole</b> is made the size's <b>tap drill</b> Ø (ISO 2306); a <b>shaft</b> is turned down to the <b>nominal</b> Ø (ISO 261). Sizes that don't fit (bigger than the shaft) are marked <b>infeasible</b>.</li>
+          </ol>
+          <p>The thread is a feature in the tree: click it to change the size. Drawings show it with the thread callout and cosmetic thread lines.</p>
+          <div class="tip"><b>Boolean with several solids:</b> in the Boolean window tick <b>Also add</b> / <b>Also remove</b> to combine or subtract more solids in one go.</div>
+          <h3 id="boolean">Boolean: Combine and Subtract solids</h3>
+          <p>With <b>Add (join)</b> a new extrude melts into every solid it touches. To keep it apart — so it can later be combined with, or subtracted from, another solid — set its operation to <b>New solid (separate)</b>: it becomes its own solid with the next number, even where it overlaps another one.</p>
+          <ol class="steps">
+            <li>Click <span class="btn">Boolean</span> in the toolbar (or right-click a face → <b>Boolean with another solid…</b>, which pre-selects that face's solid; or right-click empty space → <b>Boolean (Combine / Subtract)…</b>). Combine and Subtract need two solids; with one solid only <b>Cut by surface</b> (below) is offered.</li>
+            <li>Choose <b>Combine</b> (A + B: one solid made of both) or <b>Subtract</b> (A − B: Solid A with Solid B's volume removed).</li>
+            <li>Pick the two solids by number.</li>
+            <li>Under <b>Originals</b>, tick <b>Keep Solid A</b> and/or <b>Keep Solid B</b> to keep the original solids as they were. Unticked originals are deleted (used up). The window shows the result before you press <b>OK</b>, e.g. “Result: Solid 3 = Solid 1 − Solid 2”.</li>
+          </ol>
+          <ul>
+            <li>The result always gets a <b>new number</b> (the next free one); kept originals keep theirs. Numbers stay put when you rebuild, save and reopen.</li>
+            <li>A kept original that overlaps the result (A after a Subtract, A and B after a Combine) is <b>hidden</b> so it doesn't show through the result; show it again with its eye button in the Solids list.</li>
+            <li>The Boolean is a feature in the tree like any other: click it to switch between Combine and Subtract, change <b>Keep A</b> / <b>Keep B</b>, <b>Swap A and B</b>, suppress or delete it.</li>
+            <li>Combine needs the solids to touch or overlap (otherwise they can't become one solid); Subtract needs B to overlap A. If Subtract cuts A into pieces, each piece is a new solid.</li>
+            <li>After a Boolean (or a New solid), later features work solid by solid: an Add extrude joins only the solids it touches, a Move moves one solid without merging it into others, a fillet rounds the picked edges on each solid that has them.</li>
+          </ul>
+          <h3 id="cutsurface">Boolean: Cut by surface (with a plane or a line)</h3>
+          <p>Splits one solid into two pieces along a flat <b>plane</b>, or along a <b>line</b> (or a chain of lines) drawn in a sketch — like sawing the part. It works with a single solid, so the Boolean button is available as soon as there is one solid.</p>
+          <ol class="steps">
+            <li><b>Make the cutter</b> (if you don't use a main plane):
+              <ul>
+                <li><b>Plane:</b> the main planes XY, XZ, YZ are always offered; for any other position right-click a face → <b>Create a plane…</b> (a datum plane, also offset or turned).</li>
+                <li><b>Line:</b> make a sketch on a plane that crosses the part and draw one <b>open</b> line or a chain of joined lines (an L, a zig-zag) right across it. Closed outlines, branches and construction lines are not used. The line is extended at both ends, then swept along the sketch's normal through the whole part.</li>
+              </ul></li>
+            <li>Click <span class="btn">Boolean</span> → <b>Cut by surface</b>. Or right-click a plane → <b>Cut a solid with this plane…</b>, or right-click a flat face → <b>Cut another solid with this face's plane…</b> (the cutter is then filled in).</li>
+            <li>Pick <b>Solid A</b> (the solid to cut) and <b>Cut with</b> (XY, XZ, YZ, your datum planes, and the sketches with an open line chain).</li>
+            <li><b>Keep</b>: <b>Both pieces</b> (two new solids), <b>Side 1</b> only (the side the plane's normal points to, or the <b>left</b> of the line as it was drawn — from its first to its last point) or <b>Side 2</b> only.</li>
+            <li>Under <b>Originals</b>, tick <b>Keep Solid A</b> to keep the uncut solid as well (it is hidden so it doesn't show through), then <b>OK</b>.</li>
+          </ol>
+          <ul>
+            <li>Each piece is a new solid with the next free number. The <b>Cut by surface</b> feature stays in the tree: click it to change <b>Cut with</b>, <b>Keep</b> or <b>Keep original</b>; move or edit the plane or the sketch and the cut follows.</li>
+            <li>"The cutting surface doesn't pass through the solid" — move the plane or the line so it crosses the part. "… must form one open chain" — the sketch has a closed shape or a branch; draw a single open line chain.</li>
+          </ul>
+          <div class="tip">Typical uses: split a housing into a lid and a base (cut by a plane, keep both), cut a part in half to model only one side, or trim a part along a stepped line drawn in a sketch.</div>
+          <h3>Shell</h3>
+          <ol class="steps">
+            <li>Click <span class="btn">Shell</span> in the toolbar.</li>
+            <li><b>Click the faces to open</b> (they turn orange); click one again to keep it closed.</li>
+            <li><b>Hold the left button and drag</b> from a face: the wall thickness follows the cursor and the hollowed solid shows while you drag — or type the <b>Thickness</b> in the bar. Walls go inwards.</li>
+            <li><span class="btn">Done</span> (either end of the bar, <kbd>Enter</kbd> or a middle click) — or <span class="btn">Cancel</span> (<kbd>Esc</kbd>).</li>
+          </ol>
+          <div class="tip">If the inside walls would run into other features (a hole or pocket deeper than the wall, a round smaller than the wall), OpenCascade can't make the shell: KalpaXi says so instead of making a broken solid. Use a thinner wall, or switch off the feature in the way.</div>
+          <h3>Chamfer options</h3>
+          <ul>
+            <li><b>Equal distance</b> — the same distance D on both faces.</li>
+            <li><b>Two distances</b> — D1 on the face shown <b>orange</b>, D2 on the other; <span class="btn">Flip</span> swaps the faces. Dragging from the edge sets D1 and D2 separately.</li>
+            <li><b>Distance + angle</b> — D on the orange face and the bevel angle (between 0° and 90°).</li>
+          </ul>
+          <h3>Variable-radius fillet</h3>
+          <p>In the fillet bar tick <b>Variable radius</b>: the fillet goes from <b>R1</b> at one end of the edge to <b>R2</b> at the other (labels show which end is which). Only one line or curve can be picked; picking another one replaces it. Type R1 and R2, or drag near an end to set that end's radius.</p>
+          <h3>Setting the depth with the mouse</h3>
+          <p>After <span class="btn">Extrude</span> or <span class="btn">Cut</span> (or right-click a face → <b>Extrude this face</b> / <b>Cut into this face</b>) a bar opens under the main toolbar and the new shape is shown <b>see-through</b> (blue for an extrude, red for a cut). <b>Hold the left button and move the mouse</b>: the depth follows the cursor along the sketch's normal, and stops following when you let go. Type an exact <b>Depth</b> in the bar, <b>Flip</b> it to the other side, then <span class="btn">Finish</span> (<kbd>Enter</kbd>) — or <span class="btn">Cancel</span> (<kbd>Esc</kbd>). The main toolbar is locked until then. Turn the view with the right button, pan with the middle one; a middle click = Finish. Later: double-click the feature (or <b>Drag depth</b> in its panel) to drag it again.</p>
+          <h3>Sketch on a solid's face: join, new solid, or which solid to cut</h3>
+          <ul>
+            <li><b>Extrude</b> from a sketch on a face of Solid N asks: <b>Join to Solid N</b> (it grows and keeps its number) or <b>New separate solid</b> (its own number).</li>
+            <li><b>Cut</b> from a sketch on a face of Solid N asks: <b>Cut Solid N</b> (only that solid is cut, even where the cut passes through others) or <b>Pick another solid to cut…</b> — then click the solid to cut.</li>
+            <li>An extrude from a sketch that is not on a solid's face makes a <b>separate solid</b>. Solids that overlap are <b>never merged automatically</b> — not by an extrude and not by a move; use <span class="btn">Boolean</span> → Combine to merge them.</li>
+          </ul>
+          <h3>Moving a solid with the mouse</h3>
+          <p>Right-click a face → <b>Move this solid…</b>. The solid gets an orange see-through copy; <b>hold the left button and drag</b> it. It slides in the main plane (XY, XZ or YZ) that is most square to your view — from the Top view it moves in XY, from the Front view in XZ; turn the view (right button) to move it in another plane. Steps are 0.5 mm; exact X / Y / Z values can be typed in the bar. <span class="btn">Finish</span> (<kbd>Enter</kbd>) or <span class="btn">Cancel</span> (<kbd>Esc</kbd>).</p>
+          <h3>Sizes under the mouse</h3>
+          <p>Move the mouse over the model and the status bar (bottom) shows the size of what is under it: an <b>edge</b> — line length, or circle / arc radius, diameter and length; a <b>curved face</b> — cylinder / cone / sphere radius and area; a <b>flat face</b> — its area. In a sketch it shows the length of a line, the radius of a circle or arc (with arc length and angle), and the length of a curve.</p>
+          <h3>Example: a plate with a hole</h3>
+          <ol class="steps">
+            <li><span class="btn">Sketch</span> → click <b>XY</b>.</li>
+            <li><kbd>R</kbd>: click two corners for a rectangle. <kbd>C</kbd>: draw a circle inside it.</li>
+            <li>Double-click the rectangle's sizes and type <code>60</code> and <code>40</code>; double-click the circle's Ø and type <code>10</code>. Lock them if you want them fixed.</li>
+            <li><span class="btn">Finish</span>, then <span class="btn">Extrude</span>; set the distance to <code>5</code>. The circle becomes a hole automatically.</li>
+            <li>Click a top edge, right-click → <b>Fillet</b>, set the radius, press <kbd>Enter</kbd>.</li>
+          </ol>
+          <div class="tip">Every feature can be renamed, <b>suppressed</b> (temporarily switched off) or deleted from the right panel. Clicking empty space shows the volume, size and estimated weight of the part.</div>
+        </section>
+
+        <section id="solids">
+          <h2>Solids: colour, name, lock</h2>
+          <p>Every separate solid is listed under <b>Solids</b> below the feature tree, with its number. Each row has five buttons:</p>
+          <table>
+            <tr><th>Button</th><th>What it does</th></tr>
+            <tr><td>Eye</td><td>Hide / show the solid.</td></tr>
+            <tr><td>Two squares</td><td>Transparent / opaque.</td></tr>
+            <tr><td>Padlock</td><td><b>Lock</b> / unlock (below).</td></tr>
+            <tr><td>Arrow</td><td>Save as / Export this solid.</td></tr>
+            <tr><td>Bin</td><td>Delete the solid and the features that build it.</td></tr>
+          </table>
+          <ul>
+            <li><b>Colour:</b> right-click a face → <b>Solid colour</b> colours only the solid that face belongs to; the other solids keep theirs. <b>Face colour</b> colours just that face and shows over the solid's colour. The number badge in the list takes the solid's colour.</li>
+            <li><b>Rename:</b> right-click a solid in the list → <b>Rename…</b> (or double-click its name), type, <kbd>Enter</kbd> (<kbd>Esc</kbd> cancels). The <b>number never changes</b>; menus show it as “Solid 1 · Bracket”.</li>
+            <li><b>Lock:</b> while a solid is locked, its sketches can't be opened and the features that build it can't be edited, switched off or deleted, and the solid can't be deleted. Locked items show a small padlock in the tree and their panel is greyed out (the name stays editable). Unlock with the same button or the right-click menu. The lock covers the features that existed when you locked it.</li>
+          </ul>
+          <p>The name, colour and lock are saved with the project.</p>
+        </section>
+
+        <div class="chapter" id="ch-asm"><span>Assemblies and drawings</span><p>Putting parts together, looking inside, weighing them, and drawing them.</p></div>
+
+        <section id="assembly">
+          <h2>Assembly: decks, joints, constraints</h2>
+          <p>A project has tabs at the <b>bottom left</b> of the 3D view, like sheets in a spreadsheet. <b>Form Space</b> is where solids are made and edited. <b>Assembly +</b> adds an <b>Assembly Deck</b> (up to 2: Assembly Deck-1 and -2) where solids from the Form Space are put together. <b>Drawing +</b> adds a <a href="#drawing">drawing sheet</a>. Click a tab to switch; right-click a deck tab to rename or delete it.</p>
+          <figure class="shot"><a href="help-img/16-assembly-deck.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/16-assembly-deck.webp" loading="lazy" alt="An assembly deck: the tree, the second row, the right-click menu, the Section view panel and the right-hand column"></a><figcaption>An assembly deck: the tree, the second row, the right-click menu, the Section view panel and the right-hand column <span>· click to enlarge</span></figcaption></figure>
+          <h3>What you see in a deck</h3>
+          <table>
+            <tr><th>Where</th><th>What it is</th></tr>
+            <tr><td><b>Components</b> (left)</td><td>Every part in the deck, numbered as in the Form Space. Click: pick it · right-click: Move and more. Buttons: <b>eye</b> hide / show · <b>square</b> transparent · <b>arrow</b> export STEP in its deck position · <b>bin</b> remove from the deck (the solid stays in the Form Space).</td></tr>
+            <tr><td><b>Constraints</b> (left)</td><td>How the parts are held. Click one: its two parts light up and its settings show on the right. Eye: switch off (kept, not solved) · bin: delete. “Fix Solid 1 · assembly origin”: the first part is held on the origin.</td></tr>
+            <tr><td><b>Groups</b> (left)</td><td>A chosen set of parts shown on its own — to compare ideas or look at a sub-group. <b>＋</b>: new group (name, tick the parts) · click or eye: show only this group (again: show all) · pencil: change name or parts · bin: delete the group (the parts stay).</td></tr>
+            <tr><td><span class="btn">Pull component</span></td><td>Brings solids of the Form Space — or a whole other deck, as a sub-assembly — into the deck. On its left: the deck's name and what you are doing now.</td></tr>
+            <tr><td><span class="btn">Insert</span></td><td>A bolt in a hole in one go: click the round face of the part going in (near its head), then the hole — same axis, head flush.</td></tr>
+            <tr><td>Constraint buttons</td><td><b>Coincident</b>, <b>Concentric</b>, <b>Distance</b>, <b>Normal</b>, <b>Parallel</b>, <b>Tangent</b>, <b>Fix</b> — click a face on one part, then on the other (below).</td></tr>
+            <tr><td><span class="btn">Smart mate</span></td><td>Drag a face of one part onto a face of another: the constraint is chosen for you (flat on flat: coincident, round on round: concentric, round on flat: tangent). <kbd>Alt</kbd> + drag does it at any time.</td></tr>
+            <tr><td>Deck note · <span class="btn">Tolerance study</span></td><td>The count of parts and constraints (during a step: what to click next) · gaps and interference from the size tolerances (below).</td></tr>
+            <tr><td><span class="btn">Explode</span> (main toolbar)</td><td>Spreads the parts apart with explode lines; <b>Spread</b> in the second row sets how far. Press again to collapse. A drawing of the deck can show this as an exploded view.</td></tr>
+            <tr><td>Right-click a part</td><td><b>Move</b> — drag it; it slides only as its constraints allow and stops when it touches another part · <b>Normal view</b> — look straight at that face · <b>Section view</b> — opens the panel. On empty space: Pull component, Section view, Fit, Iso / Top / Front.</td></tr>
+            <tr><td><b>Right-hand column</b></td><td>Look here first. With nothing picked it explains the deck: what it is, which tools work here, how many parts and constraints there are, and what to do next — with a <b>Pull component…</b> button. Pick a part: its name, where it comes from, its X Y Z shift, Fixed, Move, Hide, Export STEP, Remove from deck. Pick a constraint: its type and value. After a tolerance study its results are shown here.</td></tr>
+          </table>
+          <h3>How to build an assembly — step by step</h3>
+          <ol class="steps">
+            <li><b>Model the parts</b> in the Form Space, each as its own solid (extrude with <b>New solid (separate)</b>, or import STEP). Give them names (right-click in the Solids list → Rename…) — the names appear in the deck, the parts list and the tolerance study.</li>
+            <li>Click <b>Assembly +</b> at the bottom left. An empty <b>Assembly Deck-1</b> opens and the second bar becomes the assembly bar.</li>
+            <li><span class="btn">Pull component</span> → tick the solids and how many of each → <b>Pull</b>. The <b>first</b> part pulled in is <b>fixed</b> on the assembly's coordinate system; the others are free.</li>
+            <li><b>Place the parts</b> with <b>constraints</b> (face to face rules, several per part, below): click the constraint button, click a face of the part that <b>moves</b>, then the matching face of the part it goes <b>to</b>. <span class="btn">Insert</span> puts a bolt in a hole in one go; <span class="btn">Smart mate</span> (or <kbd>Alt</kbd> + drag) picks the constraint for you.</li>
+            <li>Check each part's panel: it shows how many <b>degrees of freedom</b> are left (0 = fully placed). Drag a part with <b>Move</b> (right-click it) to see how it can still move.</li>
+            <li>Optional: <span class="btn">Tolerance study</span> (right end of the bar) for the gaps and interference between parts from their tolerances (below), <span class="btn">Section</span> to look inside, and a <b>Drawing +</b> of the deck with a parts list.</li>
+            <li><b>Save</b> — the decks, their parts, joints and constraints are saved in the <code>.kxi</code> project.</li>
+          </ol>
+          <h3>In a deck</h3>
+          <ul>
+            <li>Sketch, Extrude, Cut, the other modelling tools and the analysis tools (Mesh&amp;FEM, Results, Fatigue, Mold) are greyed out — they work in the Form Space. The file menu and the <span class="btn">Section</span> view work.</li>
+            <li>The second bar holds <span class="btn">Pull component</span>, <span class="btn">Insert</span>, the constraint buttons (Coincident … Fix), <span class="btn">Smart mate</span> and <span class="btn">Tolerance study</span>; <span class="btn">Explode</span> is in the main toolbar.</li>
+            <li>The Model list shows the <b>Components</b> pulled in, the <b>Constraints</b> and the <b>Groups</b> (and <b>Joints</b> from older files).</li>
+          </ul>
+          <h3>Pull component</h3>
+          <ol class="steps">
+            <li><span class="btn">Pull component</span> opens a window with two choices: <b>Pull component</b> (the solids of the Form Space) or <b>Pull assembly</b> (the other deck, pulled in as a whole).</li>
+            <li>Tick what to bring in and set <b>× how many</b>; the same solid can be pulled in several times.</li>
+            <li><b>Pull</b>. The solids keep their names; copies are numbered, e.g. “Bracket &lt;1&gt;”, “Bracket &lt;2&gt;”.</li>
+          </ol>
+          <p>A pulled solid first sits where it is in the Form Space; copies, and anything that would overlap, go to its right. Changes made in the Form Space (shape, colour) show in the decks. A deck can't be pulled into a deck it is already part of.</p>
+          <h3>Components</h3>
+          <ul>
+            <li>Each row: <b>show / hide</b>, <b>transparent</b>, <b>export</b> (a STEP file of the part as it sits in the deck) and <b>remove</b> (the solid stays in the Form Space).</li>
+            <li>Click a part in the view or the list to pick it; <kbd>Del</kbd> removes it. Its panel shows where it comes from and its position (X / Y / Z shift), which you can type unless a joint places it.</li>
+            <li><b>Right-click a part</b> in the view: <b>Move</b>, <b>Normal view</b>, <b>Section view</b>.</li>
+          </ul>
+          <h3>Joints (older files)</h3>
+          <p>New decks use constraints; joint buttons are no longer in the bar. Joints in projects made with an earlier release still work as described here — delete them to replace them by constraints. A joint places one part (the moving part) on another (the base part) and then lets it move only as the joint allows.</p>
+          <ol class="steps">
+            <li>Click a joint button.</li>
+            <li>Click the <b>part that moves</b> — on the face the joint uses.</li>
+            <li>Click the <b>base part</b> — on the matching face. The moving part snaps into place.</li>
+          </ol>
+          <table>
+            <tr><th>Joint</th><th>Pick</th><th>After placing</th><th>Drag (Move)</th></tr>
+            <tr><td>Fixed</td><td>any point on each part</td><td>locked where it is</td><td>can't move</td></tr>
+            <tr><td>Mate</td><td>a flat face on each</td><td>faces flush, the clicked spots together</td><td>slides over the face, no turning</td></tr>
+            <tr><td>Revolute</td><td>a round face (its axis) or a flat face (its normal)</td><td>axes lined up</td><td>turns about the axis</td></tr>
+            <tr><td>Slider</td><td>as Revolute</td><td>axes lined up</td><td>slides along the axis</td></tr>
+            <tr><td>Cylindrical</td><td>as Revolute</td><td>axes lined up</td><td>slides; <kbd>Shift</kbd>-drag turns</td></tr>
+            <tr><td>Planar</td><td>a flat face on each</td><td>faces flush, the clicked spots together</td><td>slides; <kbd>Shift</kbd>-drag turns</td></tr>
+            <tr><td>Ball</td><td>a point on each (a round face gives a point on its axis)</td><td>the two points together</td><td>turns any way about the point</td></tr>
+          </table>
+          <ul>
+            <li><b>Move</b> (right-click the part, or the button in its panel): hold the left button and drag. A part held by a joint moves only within that joint; parts joined to it move along. A part with no joint moves parallel to the screen. <span class="btn">Done</span> (<kbd>Enter</kbd> or a middle click) keeps it, <kbd>Esc</kbd> cancels; one Undo step per move.</li>
+            <li>Click a joint in the <b>Joints</b> list for its panel: the values (angle, slide, X / Y) to type, and <b>limits</b> — min / max angle, min / max slide (empty = free). Dragging stops at a limit, and a typed value beyond a limit is held at it.</li>
+            <li>A part can be placed by <b>one joint</b> only, and joints can't chain back round to the part itself. Deleting a joint leaves the part where it is, free again; removing a part removes its joints.</li>
+            <li>Parts may overlap — there is no collision check while moving (the <b>Tolerance study</b> reports interference).</li>
+          </ul>
+          <h3>Constraints (face to face)</h3>
+          <p>Constraints place a part by rules between its faces and the faces of other parts, like in most CAD programs. A part can have <b>several</b> constraints; each one removes some of its 6 degrees of freedom (3 shifts, 3 turns).</p>
+          <table>
+            <tr><th>Constraint</th><th>Pick (moving part first, then the other part)</th><th>Result</th></tr>
+            <tr><td>Coincident</td><td>Two flat faces; two round faces; a cylinder / sphere and a flat face</td><td>Flat faces against each other (tick <b>Faces turned the same way (aligned)</b> to make them face the same way, flush); round faces on one axis</td></tr>
+            <tr><td>Concentric</td><td>Two round faces (cylinders, cones) or two spheres</td><td>On one axis / one centre — a pin in a hole</td></tr>
+            <tr><td>Distance</td><td>Flat faces, axes, or an axis / sphere and a face</td><td>At the gap you type (mm) — <b>On the other side of the face</b> flips it</td></tr>
+            <tr><td>Normal</td><td>Faces or axes</td><td>Square to each other (an axis normal to a flat face)</td></tr>
+            <tr><td>Parallel</td><td>Faces or axes</td><td>Parallel</td></tr>
+            <tr><td>Tangent</td><td>A cylinder / sphere and a flat face, or two cylinders / spheres</td><td>Touching (<b>Inside (one in the other)</b> for a shaft in a bore)</td></tr>
+            <tr><td><b>Fix</b></td><td>Click one part</td><td>Held where it is in all 6 directions: constraints and Move never move it. The first part pulled in is fixed automatically. Free it with the <b>Remove the Fix</b> button in its row, or untick <b>Fixed (Fix)</b> in the part's panel.</td></tr>
+          </table>
+          <ul>
+            <li>Click a constraint in the <b>Constraints</b> list for its panel: the distance, the flip / side options, <b>Switched off</b>, <b>Delete</b> (the parts stay where they are).</li>
+            <li>A constraint that can't be met together with the others is marked ⚠ with how far off it is — change it or delete a conflicting one; the others are still met.</li>
+            <li>Typical: a bolt in a plate = <b>Concentric</b> (shank in the hole) + <b>Coincident</b> (head face on the plate face) → 1 freedom left (turning about the axis), which is fine.</li>
+          </ul>
+          <h3>Tolerance study (gaps and interference)</h3>
+          <p>Checks whether the parts still fit when every size is at the end of its tolerance. The tolerance of each size comes from the part's <b>drawing</b> (a dimension with its own tolerance) or, otherwise, from the <b>general tolerance</b> of its <b>Manufacturing method</b> and <b>Manufacturing tolerance</b> (right-click a face of the solid → <b>Properties</b>; e.g. machining to ISO 2768-1 m, sheet metal to ISO 20457, molding, casting).</p>
+          <ol class="steps">
+            <li>Set the <b>Manufacturing method</b> and <b>Manufacturing tolerance</b> of each solid (Properties), and/or put toleranced dimensions on its drawing.</li>
+            <li>In the deck, click <span class="btn">Tolerance study</span>. The window lists every size of every part with its nominal, min, max and where its tolerance comes from (drawing / general / — none).</li>
+            <li><b>Run study</b>. KalpaXi rebuilds the parts many times — nominal, each size moved to a limit, then the tightest and loosest fit of every pair of nearby parts — and measures them in 3D with the joints and constraints kept.</li>
+            <li>The right panel shows, for each pair of parts: <b>Nominal</b>, <b>Tightest fit</b> and <b>Loosest fit</b> (gap, contact or <b>interference</b> with its depth and X/Y/Z size), the <b>statistical (RSS)</b> mean, σ and chance of a clash, and which sizes <b>drive</b> the gap (in %). <b>Export CSV</b>, <b>Run again</b> after changes, <b>Clear</b>.</li>
+          </ol>
+          <div class="tip">Worst case (tightest / loosest) assumes every size is at its limit at the same time; the RSS result is the realistic spread when sizes vary independently. Tighten the sizes listed under <b>Driven by</b> first.</div>
+        </section>
+
+        <section id="section">
+          <h2>Section view</h2>
+          <p>Click <span class="btn">Section</span> (top right, left of Mesh) to open the <b>Section view</b> panel at the top left of the 3D view. You can have up to <b>4 sections</b>; tick each one's check box to see it on the solids.</p>
+          <h3>Create a section</h3>
+          <ol class="steps">
+            <li><span class="btn">Create section</span>.</li>
+            <li><b>Left-click</b> a face of the model (flat or curved) or a reference plane (XY, XZ, YZ or your own).</li>
+            <li><b>Right-click</b> → <b>Set section plane</b>.</li>
+            <li><b>Hold the left button and drag</b>: the section plane moves through the model and the part in front of it disappears. Let go to set it there — or type the <b>Depth</b> in the bar. <span class="btn">Flip</span> cuts away the other side.</li>
+            <li><span class="btn">Done</span> (<kbd>Enter</kbd> or a middle click) keeps it; <span class="btn">Cancel</span> (<kbd>Esc</kbd>).</li>
+          </ol>
+          <h3>In the panel</h3>
+          <ul>
+            <li><b>Solid</b> / <b>Transparent</b> switch: <b>Solid</b> mode fills the cut faces, so the solids look solid inside; <b>Transparent</b> mode shows the inside walls instead.</li>
+            <li>Cut faces take <b>each solid's own colour, a little lighter</b>, so they stand out from the outside surfaces (a very light solid gets a slightly darker cut face instead).</li>
+            <li>Per section: check box (on / off), depth, <b>Move</b> (drag it again), <b>Flip</b>, <b>Delete</b>. <b>All on</b> / <b>All off</b>.</li>
+            <li>With 4 sections, Create section is switched off until you delete one.</li>
+            <li>A section plane runs through the whole model, so it cuts every solid it crosses. Several sections together cut away all their parts at once.</li>
+            <li>Sections are saved with the project. Each assembly deck has its own sections.</li>
+          </ul>
+        </section>
+
+        <section id="massprops">
+          <h2>Mass properties</h2>
+          <p>Right-click any face of a solid → <b>Properties</b>. A window opens over the 3D view (drag it by its title bar, close with ✕ or <kbd>Esc</kbd>) showing, for the solid that face belongs to:</p>
+          <table>
+            <tr><th>Item</th><th>Notes</th></tr>
+            <tr><td>Manufacturing method, Manufacturing tolerance</td><td>How the solid is made (machining, sheet metal, molding, casting …) and its general tolerance class. Used for the general tolerances on its <a href="#drawing">drawing</a> and in the assembly <a href="#assembly">tolerance study</a>.</td></tr>
+            <tr><td>Material</td><td>Pick from the list (Aluminum, Stainless Steel, Copper, Brass, PC, ABS, Silicone rubber, PP, Nylon, Acrylic). Its density is used for every mass value. Each solid remembers its own material, and it is saved in the project.</td></tr>
+            <tr><td>Volume, Surface area</td><td>mm³, mm²</td></tr>
+            <tr><td>Mass</td><td>g (and kg) — needs a material.</td></tr>
+            <tr><td>Centroid</td><td>Centre of gravity X, Y, Z in mm.</td></tr>
+            <tr><td>Moments &amp; products of inertia</td><td>g·mm², at the centroid (L…) and about the model origin (I…). Products use the positive convention ∫xy dm.</td></tr>
+            <tr><td>Principal moments &amp; directions</td><td>Px ≤ Py ≤ Pz with their axis directions, at the centroid.</td></tr>
+            <tr><td>Radii of gyration</td><td>mm, about the centroid axes and the principal axes.</td></tr>
+            <tr><td>Bounding box</td><td>Min / max corner and size.</td></tr>
+          </table>
+          <p>The window updates automatically when the model changes. The ⧉ button copies everything as text.</p>
+        </section>
+
+        <section id="drawing">
+          <h2>Drawing</h2>
+          <p>A <b>drawing</b> is a 2D manufacturing sheet (ISO 7200 title block) of <b>one component</b> or <b>one assembly deck</b>, with projected views, sections, details, dimensions with tolerances, notes, weld symbols and a bill of material. A project can have up to 8 drawings. Views are made from the exact solid (OpenCascade hidden-line projection) and follow every change to the model.</p>
+          <figure class="shot"><a href="help-img/17-drawing.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/17-drawing.webp" loading="lazy" alt="A drawing: the tree on the left, the drawing bar with its ▾ drop-downs, and a bill of material on the sheet"></a><figcaption>A drawing: the tree on the left, the drawing bar with its ▾ drop-downs, and a bill of material on the sheet <span>· click to enlarge</span></figcaption></figure>
+          <h3>The left side</h3>
+          <ul>
+            <li><b>Drawing</b> — what is drawn (one component or one assembly, chosen with <span class="btn">Pull component</span>) and its views. Click a view to select it and drag it on the sheet; the bin deletes it.</li>
+            <li><b>Bill of material</b> — the parts list on the sheet and its kind; click to change it or drag it.</li>
+            <li><b>Notes &amp; symbols</b> — hole and chamfer callouts, leader notes, welds, balloons, notes; click to edit in the right panel.</li>
+            <li><b>Dimensions</b> — every dimension, automatic or by hand; click for its text, tolerance and arrows.</li>
+          </ul>
+          <h3>The drawing bar</h3>
+          <table>
+            <tr><th>Group</th><th>Tools</th></tr>
+            <tr><td>Views &amp; sections</td><td><span class="btn">Views</span> ▾ (front, top, bottom, left, right, back, isometric) · <span class="btn">Projected</span> (seen from a side of another view) · <span class="btn">Exploded</span> (assemblies) · <span class="btn">Section ─</span> / <span class="btn">Section │</span> (straight cut) · <span class="btn">Offset sec.</span> ▾: offset (stepped), aligned, half, removed and revolved sections.</td></tr>
+            <tr><td>Dimensions &amp; callouts</td><td><span class="btn">Auto dim</span> (on / off: the automatic dimensions; those placed by hand stay) · <span class="btn">Linear</span>, <span class="btn">Radius</span>, <span class="btn">Diameter</span>, <span class="btn">Angle</span> · <span class="btn">Centre</span> marks on / off · <span class="btn">Hole</span>, <span class="btn">Thread</span>, <span class="btn">Chamfer</span> callouts read from the model · <span class="btn">Baseline</span> ▾: baseline, chain or ordinate runs.</td></tr>
+            <tr><td>Notes &amp; special views</td><td><span class="btn">Leader</span> · <span class="btn">Weld</span> · <span class="btn">Sym. Ø</span> (Ø to a centre line, turned parts) · <span class="btn">Broken-out</span> (local section) · <span class="btn">Break</span> (long views shortened, true sizes kept) · <span class="btn">Detail</span> · <span class="btn">Auto-balloon</span> ▾ (all parts, or one balloon) · <span class="btn">Note</span> · <span class="btn">BOM</span>.</td></tr>
+            <tr><td>Finish the dimensions</td><td><span class="btn">Reference</span> “(25)”, no tolerance · <span class="btn">Inspection</span> (oval frame) · <span class="btn">Line up</span> ▾: line up or space evenly the selected dimensions.</td></tr>
+            <tr><td>Style · export</td><td><b>Style</b> ISO 129-1 or ASME Y14.5 · <b>Arrows</b> · <b>Decimals</b> · <b>Text</b> height · <span class="btn">Export SVG</span> / <span class="btn">Export PDF</span>.</td></tr>
+          </table>
+          <div class="tip">A <b>▾</b> button holds several tools of one kind; the button shows the last one used. Click it to use that tool again, click ▾ to pick another.</div>
+          <h3>How to make a drawing — step by step</h3>
+          <ol class="steps">
+            <li>Click <b>Drawing +</b> at the bottom left. A new tab <b>Drawing-1</b> opens with an empty A3 sheet; the second bar becomes the drawing bar.</li>
+            <li><span class="btn">Pull component</span> → choose <b>a component</b> (a solid of the Form Space) or <b>an assembly</b> (a deck). The <b>front, top, side and isometric</b> views are laid out on the sheet at a standard scale that fits.</li>
+            <li>With nothing selected, the right panel holds the <b>Sheet</b> settings: size A4 … A0, landscape / portrait, scale, <b>projection</b> (First angle — ISO / Third angle — ASME) and the <b>title block</b> (title, drawing no., revision, material, mass, drawn / checked / approved by, date, company …). <b>Standard views</b> puts the views back in their places.</li>
+            <li>Add more views: <span class="btn">Views</span> (front, top, bottom, left, right, back, isometric), <span class="btn">Section ─</span> / <span class="btn">Section │</span> and <span class="btn">Detail</span> (below).</li>
+            <li><b>Dimension</b> the views (below) and set their <b>tolerances</b>.</li>
+            <li>Add <span class="btn">Note</span>, <span class="btn">Leader</span>, <span class="btn">Weld</span> symbols and, for an assembly, the <span class="btn">BOM</span>.</li>
+            <li><span class="btn">Export PDF</span> (prints at real size — choose “Save as PDF”) or <span class="btn">Export SVG</span> (real size in mm, for other CAD / documents).</li>
+          </ol>
+          <div class="tip">On the sheet: <b>left-drag</b> a view, dimension, note or the parts list to move it; <b>wheel</b> zooms; <b>right-drag</b> or <b>middle-drag</b> pans; right-click empty sheet → <b>Fit sheet</b>. <kbd>Del</kbd> deletes the selected item, <kbd>Esc</kbd> ends a tool. The Model list on the left lists views, dimensions, notes and the parts list — click to select, bin to delete.</div>
+          <h3>Views, sections and details</h3>
+          <table>
+            <tr><th>Tool</th><th>How</th></tr>
+            <tr><td><span class="btn">Views</span></td><td>Pick a direction. Projected views keep in line with the front view (first or third angle). Right-click a view → <b>Show / Hide hidden lines</b> (dashed).</td></tr>
+            <tr><td><span class="btn">Section ─</span> <span class="btn">Section │</span></td><td>Click in a front, top, side, bottom or back view where the cut goes (snaps to hole centres and corners). A section view <b>A–A</b> is placed next to it with hatched cut faces and the cutting line with arrows on the parent view. Right-click it → <b>Flip the looking direction</b>.</td></tr>
+            <tr><td><span class="btn">Detail</span></td><td>Click the centre of the circle in a base or section view, then its size. The area is shown enlarged as <b>DETAIL B (5:1)</b> (letter on the circle); change its <b>Detail scale</b> and <b>Circle radius</b> in the panel.</td></tr>
+          </table>
+          <h3>Dimensions</h3>
+          <table>
+            <tr><th>Tool</th><th>Pick</th></tr>
+            <tr><td>Linear</td><td>Two points (corners, ends, centres), then place: horizontal or vertical by where you move the mouse.</td></tr>
+            <tr><td>Aligned</td><td>Two points: the true distance, parallel to them.</td></tr>
+            <tr><td>Radius / Diameter</td><td>An arc or circle, then place the text (R… / Ø…).</td></tr>
+            <tr><td>Angle</td><td>Two straight edges, then place the arc.</td></tr>
+          </table>
+          <ul>
+            <li><b>Style</b> (in the bar): <b>ISO 129-1</b> (text along and above the line) or <b>ASME Y14.5</b> (text horizontal in a gap); arrowheads closed filled / open / oblique tick / dot; decimals; text height 2.5 – 7 mm.</li>
+            <li><b>Move:</b> drag the text to move it; drag the line or arrows to move the dimension line. Right-click → <b>Arrows inside (pointing out)</b> / <b>Arrows outside (pointing in)</b> / automatic, <b>Text back in place</b>.</li>
+            <li><b>Text / tolerance…</b> (right-click, or the panel): <b>Text</b> — <code>&lt;&gt;</code> stands for the measured value, so <code>4× &lt;&gt; THRU</code> gives “4× Ø6 THRU”. <b>Tolerance</b>: <b>General (from the solid)</b> — from the solid's Manufacturing method / tolerance (e.g. ISO 2768-m ±0.1; the <b>Feature</b> choice picks the right table, e.g. across a bend, broken edge); <b>Own tolerance</b> — e.g. <code>±0.05</code>, <code>H7</code>, <code>+0.02/0</code>; or <b>None</b>.</li>
+            <li><b>Model value</b>: which size in the model the dimension stands for — its own tolerance is then used for that size in the assembly <a href="#assembly">tolerance study</a>.</li>
+          </ul>
+          <h3>Notes, leaders, weld symbols</h3>
+          <ul>
+            <li><span class="btn">Note</span> — general notes, one per line, numbered 1, 2, 3 … on the sheet, placed above the parts list (or the title block). Drag to move; right-click → <b>Put back above the parts list</b>.</li>
+            <li><span class="btn">Leader</span> — click where the arrow points (on an edge: arrowhead; inside a face: dot), then where the text goes, and type the note. Drag the tip or the text to change it.</li>
+            <li><span class="btn">Weld</span> — ISO 2553 / AWS A2.4 symbol: click the joint, then where the reference line starts. In the panel: weld type (fillet, square / V / bevel / U / J butt, plug / slot, spot, seam), <b>Arrow side / Other side / Both sides</b>, sizes (<code>a5</code>, <code>z7</code>, <code>s4</code>), length (<code>100</code> or <code>3×50 (100)</code>), <b>Site (field) weld</b> and the <b>Tail</b> (process, e.g. ISO 4063 <code>111</code>, <code>135</code>, <code>141</code>).</li>
+          </ul>
+          <h3>Bill of material (parts list)</h3>
+          <p><span class="btn">BOM</span> on an assembly drawing puts a parts list above the title block. Click BOM and pick one of the three kinds:</p>
+          <ul>
+            <li><b>Total BOM</b> — every solid part, also inside sub-assemblies, counted; listed by name.</li>
+            <li><b>BOM in assembly sequence</b> — the assembly's own items in the order they go in (sub-assemblies as one item).</li>
+            <li><b>BOM with hierarchy</b> — parts and sub-assemblies, with the parts of each sub-assembly indented under it.</li>
+          </ul>
+          <p>Columns: S.No, Part name, Material, Qty, Assembly seq. Click the list to change its type, <b>Export CSV</b>, move it back <b>Above title block</b> or delete it.</p>
+          <div class="warn">The drawing shows the model as it is now — when the part changes, the views update. Check the dimensions and notes again after a change before you send the sheet out. Empty title-block fields use the values from the model (shown grey): material, manufacturing method and tolerance come from the solid's Properties.</div>
+        </section>
+
+        <div class="chapter" id="ch-analysis"><span>Analysis</span><p>Stress and heat, results, fatigue and the molding check.</p></div>
+
+        <section id="fea">
+          <h2>Mesh &amp; FEM — stress and thermal analysis</h2>
+          <p>KalpaXi checks solids for stress, deflection and temperature with the finite-element method. The mesh is made by <b>Gmsh</b> (second-order 10-node tetrahedra, CalculiX type <b>C3D10</b>, or first-order 4-node tetrahedra, <b>C3D4</b>) and the analysis is solved by <b>CalculiX</b>. Both run on your own computer through a small helper program, the <b>solver bridge</b>.</p>
+          <p>A <b>study</b> holds everything one analysis needs: the solids and their materials, the mesh settings, the supports, the loads and its own folder. What to define, in order: <b>analysis type → solids and materials → mesh → supports → loads → run</b>.</p>
+          <h3>One-time setup</h3>
+          <ol>
+            <li><b>Install CalculiX and Gmsh.</b> If <b>FreeCAD</b> is installed you already have both — they are in FreeCAD's <code>bin</code> folder and the bridge finds them automatically.<br>
+              Windows: download the CalculiX Windows build (ccx, e.g. from <i>calculix.de</i> or the bConverged package) and Gmsh from <i>gmsh.info</i>.<br>
+              Linux (Ubuntu/Debian): <code>sudo apt install calculix-ccx gmsh</code><br>
+              macOS: <code>brew install gmsh</code> and a CalculiX build (e.g. <code>brew install calculix-ccx</code> from a community tap).</li>
+            <li><b>Start the solver bridge</b> in a second terminal, in the kalpaxi folder: <code>npm run solver</code> (on Windows you can just double-click <code>start-solver.bat</code>). It prints where it found CalculiX and Gmsh and the folder where projects are stored (default: a <code>KalpaXi</code> folder in your home folder). Keep that window open.</li>
+            <li>If a program is not found, copy <code>bridge/config.example.json</code> to <code>bridge/config.json</code> and put in the full paths of <code>ccx</code> and <code>gmsh</code> (and the project folder you want).</li>
+          </ol>
+          <h3>Start a study, materials and the mesh</h3>
+          <figure class="shot"><a href="help-img/18-fea-1-study-mesh.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/18-fea-1-study-mesh.webp" loading="lazy" alt="Mesh&amp;FEM: the Study, Solids &amp; materials and Mesh sections, the materials table and the right-click menu"></a><figcaption>Mesh&amp;FEM: the Study, Solids &amp; materials and Mesh sections, the materials table and the right-click menu <span>· click to enlarge</span></figcaption></figure>
+          <ol class="steps">
+            <li>Click <span class="btn">Mesh&amp;FEM</span> (top right). The <b>Analysis</b> panel opens on the right with a <b>Setup</b> and a <b>Results</b> tab; its first line shows whether the solver bridge is connected.</li>
+            <li><b>Study</b>: its <b>Name</b> (a new name = a new study with its own folder) and the <b>Analysis</b>: Stress (static), Thermal (steady state) or Thermal + stress (coupled).</li>
+            <li><b>Solids &amp; materials</b>: the solids in the study, each with its material. <b>+ Add solid…</b> brings another solid in (for an assembly). <b>Table…</b> opens the materials table: one row per solid, a library material or your own values for E, ν, ρ, yield, k, α and cp (stress needs E and ν; ρ for gravity; yield for the safety factor; thermal needs k, α and cp). <b>+ Add solid…</b> / <b>Add all solids</b> in the table give the other solids of an assembly their own material.</li>
+            <li>With several solids, <b>Contacts</b> lists where they touch: <b>Bonded</b> (glued — stress and heat pass fully) or <b>Contact</b> (surfaces may open and slide with friction μ). <b>Find contacts</b> looks for them again.</li>
+            <li><b>Mesh</b>: <b>Element order</b> — <b>2nd order, 10-node tet (C3D10)</b> is the default and the right choice for stress; <b>1st order, 4-node tet (C3D4)</b> is much smaller but too stiff in bending (stresses and deflections come out low unless the mesh is very fine — the panel warns); fine for quick checks and heat flow. <b>Element size</b>: empty = automatic (the value is shown grey). <b>Curvature</b>: how many elements go round a full circle on curved faces — more gives a finer mesh round holes and fillets. <b>Generate mesh</b> / <b>Re-mesh</b>; <b>Elements</b> and <b>Nodes</b> show the mesh; below: the node and element count and the element quality (1 = perfect, below 0.1 = poor).</li>
+          </ol>
+          <h3>The right-click menu with Mesh&amp;FEM open</h3>
+          <ul>
+            <li><b>Analysis</b>: Normal view, <b>Fixed support</b>, <b>Force…</b>, <b>Pressure…</b> on the face you clicked. <kbd>Shift</kbd>-click several faces (or lines) first to put one support or load on all of them — a force is then shared between the faces by their area.</li>
+            <li><b>Thermal</b>: on the face — surface temperature, convection, heat flux, radiation; per solid — <b>Heat generation…</b> (W) and <b>Solid temperature…</b> (°C).</li>
+            <li><b>Mesh</b>: generate mesh (before meshing), show / hide elements and nodes, select the nodes of a face, a line or a whole solid, <b>Element → node</b> (below).</li>
+          </ul>
+          <h3>Supports, loads and temperatures</h3>
+          <figure class="shot"><a href="help-img/18-fea-2-supports-loads-thermal.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/18-fea-2-supports-loads-thermal.webp" loading="lazy" alt="Supports and loads, the initial temperature, and the per-solid tables for solid temperature and heat generation"></a><figcaption>Supports and loads, the initial temperature, and the per-solid tables for solid temperature and heat generation <span>· click to enlarge</span></figcaption></figure>
+          <ol class="steps">
+            <li><b>Supports:</b> right-click a face → <b>Fixed support</b>. In the list each support shows the directions it holds — untick X, Y or Z to hold only some (a roller / sliding support); the bin deletes it.</li>
+            <li><b>Loads:</b> right-click a face → <b>Force…</b> (total newtons, along the face normal or ±X/±Y/±Z, spread evenly over the face) or <b>Pressure…</b> (MPa; positive pushes into the face). Tick <b>Gravity</b> and pick its direction to add the parts' own weight. Click a load in the list to change it, or the bin to remove it. Supports show in green, loads as orange arrows.</li>
+            <li><b>Initial / reference T</b> (°C, under Supports → Thermal): the starting temperature of the parts, at which they are stress-free.</li>
+            <li><b>Solid temperature · Table…</b>: a whole solid at one temperature — one row per solid, empty = none. In a stress study each solid then expands by α·ΔT from the reference temperature, so a hot part in a cold frame gets thermal stress.</li>
+            <li><b>Heat generation · Table…</b> (under Loads → Thermal): the heat made inside each solid, in W (for example electrical losses in a coil or a chip). It is spread evenly over that solid's volume; the table shows the volume and the resulting W/m³. In an <b>assembly</b> each solid gets its own value — <b>+ Add solid…</b> adds more solids. Used in thermal and thermal + stress studies.</li>
+            <li><b>Atmospheric T</b>: the surroundings, used by convection and radiation unless they give their own T∞.</li>
+          </ol>
+          <h3>Thermal analysis, and thermal + stress together</h3>
+          <p>Choose the kind of analysis under <b>Study → Analysis</b>:</p>
+          <table>
+            <tr><th>Analysis</th><th>What CalculiX solves</th></tr>
+            <tr><td>Stress (static)</td><td>Displacements and stresses from supports and loads. A <b>Solid temperature</b> makes the whole part expand by α·(T − reference).</td></tr>
+            <tr><td>Thermal (steady state)</td><td>The temperature field and heat flow — no stresses.</td></tr>
+            <tr><td>Thermal + stress (coupled)</td><td>Both at once: the computed temperatures expand the material and cause thermal stress, together with your mechanical loads.</td></tr>
+          </table>
+          <p>Adding a thermal condition to a stress study (or a support / load to a thermal study) turns it into <b>Thermal + stress</b> automatically.</p>
+          <table>
+            <tr><th>Where</th><th>Item</th><th>Meaning / units</th></tr>
+            <tr><td rowspan="2">Supports → Thermal</td><td>Initial / reference T</td><td>°C — the starting temperature and the temperature at which the part is stress-free.</td></tr>
+            <tr><td>Solid temperature (Table…)</td><td>°C per solid — the whole solid at one temperature (stress analysis only).</td></tr>
+            <tr><td rowspan="2">Loads → Thermal</td><td>Heat generation (Table…)</td><td>W per solid — heat generated inside each solid (e.g. electrical losses), spread over its volume.</td></tr>
+            <tr><td>Atmospheric T</td><td>°C — the surroundings; used by convection and radiation unless they give their own T∞.</td></tr>
+            <tr><td rowspan="4">Right-click a face → <b>Thermal</b><br>(or DOF on nodes)</td><td>Surface temperature…</td><td>°C — the face is held at this temperature.</td></tr>
+            <tr><td>Convection…</td><td>h in W/m²K and T∞ °C: q = h·(T − T∞). Still air ≈ 5–25, forced air 25–250, water 500–10 000.</td></tr>
+            <tr><td>Heat flux…</td><td>W/m², positive = into the part.</td></tr>
+            <tr><td>Radiation…</td><td>Emissivity ε (0–1) and T∞ °C: q = ε·σ·(T⁴ − T∞⁴).</td></tr>
+          </table>
+          <p>Material thermal properties (conductivity k, expansion α, specific heat cp) come from the material list and are shown under the material.</p>
+          <p><b>Thermal results:</b> Temperature (°C) and heat flux (total and X / Y / Z, W/m²) can be plotted; the summary gives the maximum / minimum temperature and maximum heat flux, and <b>Heat flow at fixed temperatures</b> lists the watts going in (+) or out (−) through every surface held at a temperature. Coupled results also have all the stress and displacement plots.</p>
+          <h3>Node groups and loads on nodes</h3>
+          <figure class="shot"><a href="help-img/18-fea-3-node-groups-run.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/18-fea-3-node-groups-run.webp" loading="lazy" alt="Picking nodes, DOF on nodes, the Create node group window, and writing the input file and running"></a><figcaption>Picking nodes, DOF on nodes, the Create node group window, and writing the input file and running <span>· click to enlarge</span></figcaption></figure>
+          <p>For loads and supports that don't cover a whole face — a patch of a face, a line, part of an assembly — work on the <b>nodes</b> of the mesh. With the part meshed, <b>right-click</b> the model:</p>
+          <table>
+            <tr><th>Menu item</th><th>What it does</th></tr>
+            <tr><td>Generate mesh / Re-mesh (out of date)</td><td>Meshes the solid (also in the panel).</td></tr>
+            <tr><td>Show / Hide elements</td><td>Shows the mesh (elements and their edges) or the plain model.</td></tr>
+            <tr><td>Show / Hide nodes</td><td>Draws every node on the surface as a small dot.</td></tr>
+            <tr><td>Select nodes on this face</td><td>Adds all nodes of the face you right-clicked to the selection (yellow dots, visible through the part).</td></tr>
+            <tr><td>Select nodes on this line</td><td>Right-click on (or very near) an edge of the model: adds all nodes along that line.</td></tr>
+            <tr><td><b>Reselect nodes (window)</b></td><td>Keeps only <b>part</b> of the selection: drag a window (rectangle) on the screen with the left button around the nodes to keep — the nodes outside it are dropped, through the whole depth of the part. Turn the view first so the nodes you want are inside the window. <kbd>Esc</kbd> or a right-click cancels.</td></tr>
+            <tr><td>Create node group… (n nodes)</td><td>Asks for a <b>group name</b> and saves the selected nodes as a group (purple). It is written into the input file as a named node set (<code>*NSET</code>).</td></tr>
+            <tr><td>Clear node selection</td><td>Empties the selection.</td></tr>
+          </table>
+          <p>When nodes are selected the menu also shows <b>DOF on nodes</b>:</p>
+          <ul>
+            <li><b>Displacement…</b> (mm) — opens the node group window with X, Y and Z ticked at 0 (= held). Untick a direction to leave it free, or type a value to push / pull it (e.g. 0.05). Such a group is a support (green) and its reaction force appears in the results.</li>
+            <li><b>Force…</b> (N) — a total force with X / Y / Z parts (starts at Fz = −100 N) on the selected nodes. On nodes that cover whole faces it is spread as an even traction over those faces; otherwise it is shared equally between the nodes. It counts as a load, so the study can run with only this force.</li>
+            <li><b>Surface temperature… / Convection… / Heat flux… / Radiation…</b> — the same thermal conditions as on faces, applied to the faces covered by the selected nodes (red).</li>
+          </ul>
+          <p>Each opens the <b>node group</b> window: the group name, the displacements (tick a direction and type its value), the force (Fx, Fy, Fz) and the four thermal conditions (tick and type the values; leave T∞ empty to use the atmospheric temperature). Leave everything unticked for a plain named set.</p>
+          <p>The panel's <b>Node groups</b> list shows each group with its node count and its values (e.g. <code>Ux=0.02 mm</code>, <code>F=(0, 0, −100) N</code>, <code>q=2000 W/m²</code>); the pencil opens the window to change them, clicking a name selects its nodes again, the bin deletes it. Groups remember the faces / lines and the window they were picked with, so they are found again after a re-mesh.</p>
+          <div class="tip"><b>Example — a load on part of a face:</b> right-click the face → <b>Select nodes on this face</b>; right-click → <b>Reselect nodes (window)</b> and drag a window round the patch where the load acts; right-click → <b>Force…</b>, type the force, name the group, <b>OK</b>.</div>
+          <h3>Element groups</h3>
+          <p>With nodes selected, right-click → <b>Element → node</b> selects the elements attached to them. The panel's <b>Element groups</b> section then offers <b>Create element group…</b>: a named element set (<code>*ELSET</code>) with its own <b>heat generation</b> (W or W/m³) and <b>acceleration</b> (along a direction) — added to the solid's own. Each group has an eye (highlight on / off), a pencil (edit) and a bin.</p>
+          <h3>Write the input file and run</h3>
+          <ul>
+            <li><b>Files</b> → <b>Folder</b>: the study folder, where the mesh, the input file and the results are kept.</li>
+            <li><b>Write input file</b> meshes if needed and writes <code>job.inp</code> only — to check it or run CalculiX yourself.</li>
+            <li><b>Run analysis</b>: mesh → <code>job.inp</code> → CalculiX. The solver log shows in the panel while it runs (<b>Stop</b> ends it); when it finishes the <a href="#results">Results</a> tab opens.</li>
+          </ul>
+          <h3>Where the files go</h3>
+          <p>Each study has its own folder (shown under <b>Files</b>, and editable): <code>&lt;projects folder&gt;/&lt;project&gt;/&lt;study&gt;/</code> containing <code>model.step</code> (the solid), <code>mesh.msh</code> (Gmsh mesh), <code>job.inp</code> (the CalculiX input file), and the results <code>job.frd</code>, <code>job.dat</code>, <code>job.sta</code>, <code>job.cvg</code>, <code>solver.log</code>. The project itself (<code>&lt;project&gt;.kxi</code>) is saved in the project folder next to it. <b>Write input file</b> only writes <code>job.inp</code> — handy if you want to run CalculiX yourself or check it with CalculiX GraphiX (cgx).</p>
+          <div class="warn">Units are mm, N and MPa throughout. The analysis is <b>linear static</b>: small deflections, stress proportional to load, no contact between separate solids. Results right at sharp inside corners and at point-like supports grow when the mesh is refined (a stress singularity) — judge the stress a little away from them, or add a fillet.</div>
+        </section>
+
+        <section id="results">
+          <h2>Results</h2>
+          <p><span class="btn">Results</span> (top right) opens the results panel for any study of this project — stress, thermal, coupled or <a href="#fatigue">fatigue</a>. The studies are read back from the project folder by the solver bridge, so results are there again after you reopen the project. After <b>Run analysis</b> the results open by themselves.</p>
+          <h3>Looking at a result</h3>
+          <figure class="shot"><a href="help-img/18-fea-4-results.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/18-fea-4-results.webp" loading="lazy" alt="A stress result: the legend, the right-click Plot and View menu, and the result settings on the right"></a><figcaption>A stress result: the legend, the right-click Plot and View menu, and the result settings on the right <span>· click to enlarge</span></figcaption></figure>
+          <ol class="steps">
+            <li><b>Plot</b>: displacement (total, X, Y, Z), von Mises stress, maximum / minimum principal stress, each stress component, equivalent strain, the <b>safety factor</b> (yield strength ÷ von Mises), temperature and heat flux (thermal), damage and life (fatigue). <b>Right-click the model</b> for the same list (<b>Plot</b>) and for <b>View</b>: mesh lines on / off, Section view, Back to setup, Close analysis.</li>
+            <li><b>Deformation</b>: Auto (exaggerated so you can see it — the factor is shown), Undeformed, True scale, ×10 / ×100 / ×1000. <b>Mesh lines</b> and <b>Undeformed outline</b> switch the thin lines on and off.</li>
+            <li>The <b>legend</b> (top left) shows the colour bands, the unit and the deformation factor. <b>Tags</b> choose which labels are on the model: <b>Max / min</b>, the <b>Clicked point</b> (click the model to probe the value at a node), and — when there are — the fatigue <b>Critical node</b> and the <b>Converge regions</b>. Each can be switched off.</li>
+            <li><b>Section view</b> — cut the result open (up to 4 sections, as in the model): the cut faces show the values <b>inside</b> the part, and the panel shows the range <b>In the section</b>.</li>
+            <li>Check the <b>Summary</b>: max displacement, max stress, min safety factor (green when 2 or more), and the <b>Reaction forces</b> at each support (they should balance your loads); thermal: heat flow at every fixed-temperature surface.</li>
+          </ol>
+          <h3>The Results column — studies, combinations, export</h3>
+          <figure class="shot"><a href="help-img/19-fea-results.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/19-fea-results.webp" loading="lazy" alt="The Results column: loading a study, combining studies with factors, plot settings, max / min / probe, summary and export"></a><figcaption>The Results column: loading a study, combining studies with factors, plot settings, max / min / probe, summary and export <span>· click to enlarge</span></figcaption></figure>
+          <table>
+            <tr><th>Item</th><th>What it does</th></tr>
+            <tr><td><b>Study</b></td><td>Loads a study: every study with results in the project folder (stress, thermal, fatigue). Pick one to see its results alone. ⟳ looks for studies again; the bin deletes that study's folder (mesh, input file, results) from disk after you confirm.</td></tr>
+            <tr><td><b>Combine studies</b></td><td>Adds load cases together. Each row is a study and its <b>factor</b> — the number its results are multiplied by before they are added: e.g. 1.35 × dead load + 1.5 × wind; −1 reverses a load. ✕ removes a row.</td></tr>
+            <tr><td><b>+ Add study</b> · <b>Show combined result</b></td><td>Another row · the sum, node by node, shown like any result (its title lists the factors). Valid for <b>linear</b> studies on the <b>same mesh</b> (not with contact); stresses, safety factor and reactions are worked out from the sum. Pick a study in the Study list to see one alone again.</td></tr>
+            <tr><td>On show</td><td>Which result this is — one study, or the combination with its factors — and its folder.</td></tr>
+            <tr><td>Max · Min · Probe</td><td>The highest and lowest value with node number and position; <b>Probe</b>: the value where you clicked.</td></tr>
+            <tr><td><b>Export CSV</b> · <b>Save image</b> · <b>Open .frd…</b></td><td>Every node's values as CSV · the view as a PNG with its legend · load any CalculiX results file.</td></tr>
+          </table>
+          <ul>
+            <li>Each study keeps its own folder, so you can compare load cases by switching the Study list. Fatigue uses these stress studies as its load cases.</li>
+            <li>Results stay on show while you place a section; close them with ✕ in the panel title.</li>
+          </ul>
+          <h3 id="converge">Converge stress — refine until the stress settles</h3>
+          <figure class="shot"><a href="help-img/18-fea-5-converge-stress.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/18-fea-5-converge-stress.webp" loading="lazy" alt="Converge stress: the settings in the Setup tab, and the convergence table of the runs in the Results tab"></a><figcaption>Converge stress: the settings in the Setup tab, and the convergence table of the runs in the Results tab <span>· click to enlarge</span></figcaption></figure>
+          <p>A peak stress depends on the mesh: finer elements at a notch give a higher, truer value until it stops changing. <b>Converge stress</b> (Setup tab, below Files) does this for you, for stress studies with 10-node elements:</p>
+          <ol class="steps">
+            <li>Set <b>× max</b> — spots with von Mises above this share of the peak are followed (≤ 1, default 0.7); <b>mm ball</b> — one peak per ball and the refined zone round it (default 3 mm); <b>% change</b> — settled below this (default 5 %); <b>refinements</b> — at most (default 4).</li>
+            <li><span class="btn">Converge stress</span>. Run 1 finds the peaks (nodes of supports and one element ring round them are left out). Each next run halves the element size in the balls round the open spots, solves again and compares — until every spot changes by less than the % or the refinements are used up. <b>Stop converging</b> ends it.</li>
+            <li>The <b>Stress convergence</b> table (Results tab) lists each region R1, R2 … with its peak von Mises stress in every run and the change from the run before, the status (<b>converged</b>, <b>not converged</b>, <b>open</b> or <b>singular?</b>) and the node count of each run. Tags → <b>Converge regions</b> marks them on the model.</li>
+          </ol>
+          <p>The runs are kept as <b>Study 1-1</b>, <b>Study 1-2</b> … (each with <code>stress_peaks.csv</code> and <code>convergence.csv</code>); the last one holds the accurate stress. <b>singular?</b> means the stress still rises by about the same step each run — a sharp corner or a point support, not a real stress.</p>
+        </section>
+
+        <section id="fatigue">
+          <h2>Fatigue (pyLife)</h2>
+          <p><span class="btn">Fatigue</span> turns the stresses of one or more <b>stress studies</b> into fatigue <b>damage</b> and <b>life</b> with <a href="https://github.com/boschresearch/pylife" target="_blank" rel="noopener">pyLife</a> (Bosch Research, open source, Apache-2.0): Wöhler (S-N) curve, mean-stress correction, rainflow counting and the Palmgren–Miner rule, at every node.</p>
+          <h3>One-time setup (Python and pyLife)</h3>
+          <ol>
+            <li>Install <b>Python 3</b> (3.10 – 3.14 recommended) from python.org.</li>
+            <li>Open the Fatigue panel: its first line shows which Python the bridge found and whether pyLife imports there. If not, it shows the exact commands for <b>that</b> Python, for example (Windows):<br>
+              <code>py -m pip install numpy scipy "pandas&gt;=2.2"</code><br>
+              <code>py -m pip install pylife --no-deps</code><br>
+              (<code>--no-deps</code> skips h5py, which KalpaXi doesn't need and which may not build on very new Python versions.)</li>
+            <li>Press ⟳. If you have several Pythons, set <code>"python"</code> in <code>bridge/config.json</code> to the one with pyLife (e.g. <code>"C:\\Python314\\python.exe"</code>) and restart KalpaXi / the solver bridge.</li>
+          </ol>
+          <h3>Setting up a fatigue study</h3>
+          <figure class="shot"><a href="help-img/20-fatigue-1-duty-cycle-sn.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/20-fatigue-1-duty-cycle-sn.webp" loading="lazy" alt="The Fatigue column, the duty-cycle table, the mean-stress models and the S-N curve with its plot"></a><figcaption>The Fatigue column, the duty-cycle table, the mean-stress models and the S-N curve with its plot <span>· click to enlarge</span></figcaption></figure>
+          <ol class="steps">
+            <li>Run the <b>stress studies</b> for your load cases first (<a href="#fea">Mesh&amp;FEM</a> → Run analysis), e.g. “Bending” and “Torsion”. Use 2nd-order tets and refine at notches (<a href="#converge">Converge stress</a> helps).</li>
+            <li><span class="btn">Fatigue</span> (top right). The first line shows the pyLife and Python the bridge will use (⟳ checks again). <b>Duty cycle</b> lists the rows in short.</li>
+            <li><b>Edit duty cycle…</b> opens the table. <b>+ Add row</b> per load, then for each row:
+              <ul>
+                <li><b>Study</b> — which stress study (its loads) the row uses.</li>
+                <li><b>Load factor</b> — multiplies the study's stresses: <code>1</code> = 0 → 1 (pulsating), <code>±1</code> = −1 → 1 (fully reversed), <code>-0.5/1</code> = −0.5 → 1.</li>
+                <li><b>Cycles</b> — <code>1e6</code>, or <code>20 Hz × 100 h</code> (the life is then also given in hours).</li>
+                <li><b>Mean-stress model</b> — <b>None</b> (amplitude only) · <b>Goodman</b> σa,eq = σa / (1 − σm/Rm) · <b>Gerber</b> σa,eq = σa / (1 − (σm/Rm)²) · <b>SWT</b> (Smith–Watson–Topper) √(σmax · σa) · <b>FKM (M)</b> the FKM Haigh diagram with the mean-stress sensitivity M.</li>
+              </ul>
+              ▲ moves a row up, the bin removes it.</li>
+            <li>How the rows combine: off — <b>rows independent, Miner sum</b> (D = Σ n/N); on — <b>Loads alternate in sequence (rainflow of the combined history)</b>, which also counts the big cycles from one load to the next. <b>Duty cycle repeats</b>: how often the duty cycle is run in service (damage = repeats × one duty cycle). <b>Done</b>.</li>
+            <li><b>Equivalent stress</b>: signed von Mises (default), abs. max principal or signed Tresca.</li>
+            <li><b>S-N curve</b>: <b>From material</b> fills Rm, the endurance limit <b>SD</b> at <b>ND</b> cycles, the slope <b>k₁</b> and <b>M</b> (FKM estimate) — or type tested values. <b>Miner rule</b> (below SD): Haibach (k₂ = 2k₁ − 1), elementary (k₂ = k₁), original (no damage below SD) or modified (k₂ given). <b>Material defaults</b> puts the estimate back. Apply surface, size and notch factors to SD yourself.</li>
+            <li>The <span class="btn">S-N curve</span> icon plots the curve: stress amplitude against cycles, log-log, with the chosen Miner rule bold and the others faint, Rm and SD marked, and a table of the allowed amplitude at 10³ … 10⁹ cycles.</li>
+            <li><b>Run fatigue (pyLife)</b>: each study's <code>job.frd</code> is turned into pyLife input, pyLife runs (the log shows progress; <b>Stop</b> ends it) and the result opens.</li>
+          </ol>
+          <h3>Fatigue results</h3>
+          <figure class="shot"><a href="help-img/20-fatigue-2-results.webp" target="_blank" rel="noopener" title="Open full size"><img src="help-img/20-fatigue-2-results.webp" loading="lazy" alt="A fatigue result: log damage, the critical node, damage and life, and each duty-cycle row's share"></a><figcaption>A fatigue result: log damage, the critical node, damage and life, and each duty-cycle row's share <span>· click to enlarge</span></figcaption></figure>
+          <ul>
+            <li><b>Plot</b>: damage D, log₁₀ damage, <b>life</b> (log₁₀ duty cycles), and each row's damage and equivalent amplitude σa,eq — with legend, probe, tags and section view like any result. Tags → <b>Critical node</b> marks the node with the highest damage.</li>
+            <li><b>Max damage</b> (≥ 1 = fails within the duty cycles given; green below 0.3), <b>min life</b> in duty cycles (and hours when every row is in Hz × hours), and the repeats.</li>
+            <li><b>Critical node</b>: where the damage is highest, and each duty-cycle row's share there — σa,eq after the mean-stress model, the allowed cycles N and the damage D — so you see which load case to work on.</li>
+            <li>The fatigue result appears in the Study list like the other studies. <b>Duty cycle…</b> goes back to the set-up to change it and run again.</li>
+            <li>Files in <code>&lt;project&gt;/Fatigue/</code>: <code>pylife_input_*.csv</code> (stresses from each <code>job.frd</code>), <code>fatigue.frd</code> (opens in CalculiX GraphiX too), <code>fatigue_nodes.csv</code>, <code>fatigue_summary.json</code>, <code>fatigue.log</code>.</li>
+          </ul>
+          <div class="warn">The default S-N data are rough FKM estimates for polished, unnotched material. Fatigue life is very sensitive to surface, notches, residual stress and the stress amplitude (a 10 % higher stress can halve the life) — use tested data and safety factors for real designs.</div>
+        </section>
+
+        <section id="mold">
+          <h2>Molding check (injection molding)</h2>
+          <p>The <span class="btn">Mold</span> button (top right, after <span class="btn">Fatigue</span>) checks whether a solid can be injection molded, using the
+            knowledge-based rules of the <b>Injection Molding DFM Rulebook</b>. Every finding names the rule it comes from (e.g. <code>WT-1</code>), so you can look it up in the table below.
+            The check runs in the background in a second or two, then the panel shows the result and a colour map is drawn on the part.</p>
+
+          <h3>How to run a molding check — step by step</h3>
+          <ol class="steps">
+            <li>Model the part as one solid with its real walls (shell it, add ribs, bosses, holes). Add draft to the walls if you have it — without draft every vertical wall is reported (DR-1).</li>
+            <li>Click <span class="btn">Mold</span>. Pick the <b>Solid</b> and the <b>Material</b> (resin).</li>
+            <li><b>Opening</b>: leave <b>Propose</b> (KalpaXi tries the main directions and picks the one with the fewest undercuts), or right-click a face → <b>Open the mold along this face's normal</b>. The blue arrow shows it.</li>
+            <li>Set <b>Texture</b>, <b>Side actions</b> allowed or not, <b>Cosmetic</b> part, and optionally your own <b>Gates</b> (Place gates… or right-click → <b>Put a gate here</b>).</li>
+            <li>The check runs by itself. Go through the colour maps (<b>Thickness</b>, <b>Thick spots</b>, <b>Draft</b>, <b>Undercuts</b>, <b>Features</b>, <b>Fill</b>) and the <b>Findings</b> list — click a finding to see where it is and which rule and source it comes from.</li>
+            <li>Change the model (thinner walls, more draft, core out bosses …) and press <b>Run again</b>. <b>Export CSV</b> saves the findings for your molder.</li>
+          </ol>
+          <h3>Setting it up</h3>
+          <table>
+            <tr><th>Setting</th><th>What it does</th></tr>
+            <tr><td>Solid</td><td>Which solid to check (shown when the model has more than one).</td></tr>
+            <tr><td>Material</td><td>16 molding resins with their wall range, draft, shrinkage and type (amorphous / semi-crystalline, glass-filled, flexible). The line under it shows the values used.</td></tr>
+            <tr><td>Opening</td><td>The direction the mold opens (the cavity half moves this way; the core half the other way). <b>Propose</b> tries the X, Y and Z axes and the normals of the large flat faces and picks the one with the least undercut, then the least zero-draft area, then the largest shadow (parting line on the biggest silhouette). Or choose an axis, press <b>Pick a face for the direction</b>, or right-click a face → <b>Open the mold along this face's normal</b>. The blue arrow on the part shows it.</td></tr>
+            <tr><td>Texture</td><td>Textured faces need more draft: light 3°, heavy 5°, leather 10°.</td></tr>
+            <tr><td>Side actions</td><td>If slides / lifters are not allowed, undercuts and side holes are errors instead of warnings.</td></tr>
+            <tr><td>Gates</td><td>Proposed by KalpaXi, or your own: press <b>Place gates…</b> and click points on the part (click empty space to finish), or right-click → <b>Put a gate here</b>. <b>clear</b> goes back to the proposal.</td></tr>
+            <tr><td>Cosmetic</td><td>Tick for a visible or glossy part: ribs may only be 40 % of the wall (instead of 60 %) and a sink mark opposite a rib, boss or gusset becomes an error.</td></tr>
+            <tr><td>Resolution</td><td><b>Normal</b> measures about 40 000 surface points; <b>Fine</b> about 120 000, for small features (slower).</td></tr>
+          </table>
+          <p>Changing a setting or the model marks the result as out of date (the map is hidden) until you press <b>Run again</b>. The settings are saved in the <code>.kxi</code> project.</p>
+
+          <h3>Colour maps</h3>
+          <table>
+            <tr><th>Map</th><th>Shows</th></tr>
+            <tr><td>Thickness</td><td>Wall thickness at every point: red = thinner than the material minimum (won't fill), purple = thicker than its maximum, blue → green → yellow inside the allowed range.</td></tr>
+            <tr><td>Thick spots</td><td>Diameter of the largest ball that fits in the material at each point, compared with the nominal wall: orange &gt; 2 × nominal (sink mark), red &gt; the material maximum (void / sink).</td></tr>
+            <tr><td>Draft</td><td>Green / blue = enough draft on the cavity / core side, yellow = less than needed, red = no draft at all, light grey = a curved face the parting line runs across, purple = undercut.</td></tr>
+            <tr><td>Undercuts</td><td>Orange = an undercut a straight side action can release, red = one that needs a lifter, insert or redesign.</td></tr>
+            <tr><td>Features</td><td>What KalpaXi recognised: ribs (blue), gussets (teal), bosses (orange), holes (yellow), each tagged R1, G1, B1, H1 … on the part.</td></tr>
+            <tr><td>Fill</td><td>How the melt fills from the gate(s): blue at the gate → orange where it fills last, red where the flow is longer than the material allows. Drawn on top: the gates (red arrows), weld lines (purple lines, W1 …), the last points to fill (V1 …) and the proposed ejectors (white circles, E1 …).</td></tr>
+          </table>
+          <h3>Gates, filling and ejection (Release 3)</h3>
+          <p>This is a <b>rule-based estimate</b>, not a mold-flow simulation: it follows the melt along the walls, but not its temperature, pressure or speed. Use it to place gates and spot problems early; confirm critical parts with a flow simulation or your molder.</p>
+          <ul>
+            <li><b>Flow length</b> — for every point, the easiest path from the nearest gate, adding up length ÷ wall thickness along the way (so thin walls count more). The largest value is compared with the material's flow ratio L/t (ABS 200, PC 100, PP 250 …).</li>
+            <li><b>Gate proposal</b> — the point with the shortest longest flow (the centre of the part, GT-2), moved into a clearly thicker section if the flow stays well within the limit (GT-1); never on ribs, bosses or holes, or on the show side of a cosmetic part (GT-4). If one gate can't fill within 90 % of the limit, KalpaXi adds gates (up to 4) and lets each fill an equal share (GT-6).</li>
+            <li><b>Weld lines</b> — behind every through-opening (holes, windows, slots in flat walls): where the fill paths of neighbouring points went round opposite sides of it. Between gates: where their regions meet. The part where the two flows meet at more than 45° is reported as visible (WL-4). A weld line on a boss, or on the show side of a cosmetic part, is a warning (WL-1).</li>
+            <li><b>Stress at weld lines (WL-2)</b> — if stress results of the same solid are loaded (Stress → Results), the von Mises stress along each weld line is compared with 75 % of the material's yield strength (50 % for glass-filled resins).</li>
+            <li><b>Last to fill (GS-1)</b> — the points that fill last. On the outside edge the air leaves through the parting line (info); at the top of a rib or boss, or where fronts meet inside the part, it is a gas trap that needs a vent or an ejector pin (warning).</li>
+            <li><b>Ejection</b> — the part shrinks onto the half that has its cores (inside walls); ejectors push from that half. KalpaXi proposes a 3–8 mm pin on a flat spot within 10 mm (or 1.5 × the height) of every rib, boss and deep core wall, an ejector sleeve for a boss whose top faces the ejection side, and a blade on a rib top that has no flat spot nearby (EJ-3). Parts without such features get at least two pins, spread out. These distances and the minimum of two pins are KalpaXi's starting values (the rulebook has no published numbers).</li>
+            <li><b>Warp</b> — flat panels whose unsupported span is more than 50 × the wall (WP-3, KalpaXi's starting value); symmetric parts gated off the symmetry plane (WP-4).</li>
+          </ul>
+          <h3>Ribs, gussets, bosses and holes</h3>
+          <p>The <b>Features</b> list in the panel shows every recognised feature with its size (e.g. “Rib 1.2 mm thick, 6 mm high on a 2 mm wall”, “Boss ⌀8 × 10 mm, hole ⌀3 mm”) and how many warnings it has; click one to highlight it. Findings about a feature start with its label.</p>
+          <ul>
+            <li><b>Rib</b> — two flat faces facing away from each other, closer than 2.5 × the nominal wall, joined by a free top face and both standing on the part (inside corners at the root). The outer wall of a box is <i>not</i> a rib (its outside has no root). The thickness is measured at the wall surface (past any root fillet), the height from the top to the wall.</li>
+            <li><b>Gusset</b> — the same thin web, with its free edge sloping between two supports that are not parallel (a floor and a wall).</li>
+            <li><b>Boss</b> — a round post (cylinder or drafted cone) all the way round one axis, standing on a wall at one end and free at the other. A hole on the same axis is its screw hole.</li>
+            <li><b>Hole</b> — a round hole all the way round one axis, smaller than half the part across it; through or blind (a floor at one end). Partial cylinders such as fillets and slot ends are not holes.</li>
+          </ul>
+          <p>Sink marks (<code>SK-1</code>) are drawn on the face <b>opposite</b> the root of a too-thick rib, gusset or boss — that is where they will show.</p>
+          <p><b>Click the part</b> to read the wall thickness, ball diameter and draft angle at that point. Right-click shows the opening-direction and map commands.</p>
+          <h3>Findings</h3>
+          <p>Errors (can't be molded as drawn), warnings (a defect is likely) and info (advice, clamp force, mold shrinkage). Click a finding to highlight it on the part and see the rule text and its source. <b>Export CSV</b> saves the list. Below the findings: the opening direction, nominal / thinnest wall, thickest section, undercut and projected area, depth, clamp force and volume, and — when the direction was proposed — how the candidate directions compared.</p>
+
+          <h3>How it measures</h3>
+          <ul>
+            <li><b>Wall thickness</b> — from each surface point a ray goes straight into the part to the far side. Where that ray runs along a wall (the side of a plate, the top of a rib, the wall of a hole), the shortest chord across the wall is used instead.</li>
+            <li><b>Thick spots</b> — the largest ball that touches the surface at the point and stays inside the material (the "rolling ball" method).</li>
+            <li><b>Draft</b> — the angle between each face and the opening direction. <b>Undercuts</b> — surface points that can't see out of the part along the opening direction on their own side; each undercut is then tested along 8 sideways directions to find a side action that frees it.</li>
+            <li><b>Corners</b> — an edge where the faces meet at more than 20° has no fillet (inside = concave). Inside fillet radii come from how fast the surface normal turns.</li>
+          </ul>
+
+          <h3>Rules checked in this release</h3>
+          <table>
+            <tr><th>Rule</th><th>Check</th><th>Severity</th><th>Source</th></tr>
+            <tr><td>WT-1</td><td>Wall thinner than the material minimum</td><td>Error</td><td>Protolabs, MoldMinds</td></tr>
+            <tr><td>WT-2 · VD-1</td><td>Section thicker than the material maximum (largest ball)</td><td>Warning</td><td>Protolabs, MoldMinds</td></tr>
+            <tr><td>WT-3 · WP-2</td><td>Thickest ÷ thinnest wall &gt; 1.5 (1.2 glass-filled), faces with ≥ 5 % of the area</td><td>Warning</td><td>MoldMinds</td></tr>
+            <tr><td>WT-6 · SK-2</td><td>Thick spot &gt; 2 × nominal wall</td><td>Warning</td><td>RJC Mold, Protolabs</td></tr>
+            <tr><td>WT-7</td><td>Walls under 1.0 mm (thin-wall molding)</td><td>Info</td><td>MoldMinds</td></tr>
+            <tr><td>DR-1</td><td>Face parallel to the opening with 0° draft (nylon: info)</td><td>Error</td><td>Fictiv, Protolabs</td></tr>
+            <tr><td>DR-2</td><td>Draft below the material / texture minimum</td><td>Warning</td><td>Fictiv, Protolabs</td></tr>
+            <tr><td>UC-1 · DR-4</td><td>Surface hidden from the opening direction (undercut / negative draft); side-action direction suggested</td><td>Warning (Error if side actions not allowed)</td><td>Protolabs</td></tr>
+            <tr><td>UC-3</td><td>Bump-off possible for flexible resins (LDPE, TPE / TPU)</td><td>noted on UC-1</td><td>Protolabs</td></tr>
+            <tr><td>UC-7</td><td>Number of side actions needed</td><td>Info</td><td>Protolabs</td></tr>
+            <tr><td>CR-1</td><td>Sharp inside edge, or inside fillet radius &lt; 0.5 × nominal wall</td><td>Warning</td><td>Protolabs</td></tr>
+            <tr><td>CR-2</td><td>Sharp outside edges (outside radius = inside + t)</td><td>Info</td><td>Covestro</td></tr>
+            <tr><td>WP-1</td><td>Semi-crystalline resin (shrink &gt; 1 %) with non-uniform walls</td><td>Warning</td><td>MoldMinds, Protolabs</td></tr>
+            <tr><td>WP-6</td><td>Mold scale factor from the resin's shrinkage</td><td>Info</td><td>RJC Mold, MoldMinds</td></tr>
+            <tr><td>TL-3</td><td>Part size, volume, projected area and depth vs. typical rapid-tooling limits</td><td>Info</td><td>Protolabs</td></tr>
+            <tr><td>TL-4</td><td>Clamp force estimate from the projected area</td><td>Info</td><td>MoldMinds</td></tr>
+            <tr><th colspan="4">Release 2 — features</th></tr>
+            <tr><td>RB-1 · SK-1</td><td>Rib base thicker than 60 % of its wall (40 % cosmetic) — sink on the opposite face</td><td>Warning (Error cosmetic)</td><td>Xometry</td></tr>
+            <tr><td>RB-2</td><td>Rib taller than 3 × its base thickness</td><td>Warning</td><td>Xometry, Covestro</td></tr>
+            <tr><td>RB-3</td><td>Rib draft below 0.5° per side (info above 1.5°: thin top)</td><td>Warning</td><td>Xometry, Covestro</td></tr>
+            <tr><td>RB-4</td><td>Rib / gusset root radius outside 0.5–1 × wall (sharp root included)</td><td>Warning</td><td>Xometry</td></tr>
+            <tr><td>RB-5</td><td>Gap between parallel ribs under 2.5 × wall (2 × for ribs lower than 3 × wall)</td><td>Warning</td><td>Xometry, Covestro</td></tr>
+            <tr><td>GU-1 · SK-1</td><td>Gusset thicker than ⅔ of the wall it joins</td><td>Warning (Error cosmetic)</td><td>Covestro, Protolabs</td></tr>
+            <tr><td>GU-2</td><td>Rib with free-standing ends</td><td>Info</td><td>Xometry</td></tr>
+            <tr><td>BS-1 · SK-1</td><td>Boss wall over 60 % of the nominal wall, or a solid boss</td><td>Warning (Error cosmetic)</td><td>HLH, Protolabs</td></tr>
+            <tr><td>BS-2</td><td>Boss taller than 3 × its diameter (over 5 × = error)</td><td>Warning / Error</td><td>HLH, Covestro</td></tr>
+            <tr><td>BS-3</td><td>Boss draft outside under 0.5°, hole under 0.25° (bosses along the opening)</td><td>Warning</td><td>HLH</td></tr>
+            <tr><td>BS-4</td><td>Base radius under 0.25 × wall (sharp base or sharp hole bottom); info above 0.5 ×</td><td>Warning</td><td>HLH</td></tr>
+            <tr><td>BS-5</td><td>Bosses closer than 2 × wall</td><td>Warning</td><td>HLH</td></tr>
+            <tr><td>BS-6</td><td>Solid plug under a boss hole (not cored down to the wall)</td><td>Warning</td><td>Covestro</td></tr>
+            <tr><td>BS-7</td><td>Free-standing boss (no rib, gusset or wall tied to it)</td><td>Info</td><td>HLH</td></tr>
+            <tr><td>BS-8</td><td>Boss and hole diameters to check against the screw maker's chart</td><td>Info</td><td>Covestro</td></tr>
+            <tr><td>HL-1</td><td>Hole deeper than blind 2 D / 3 D (D under / over 5 mm), through 4 D / 6 D; over 12 D = error</td><td>Warning / Error</td><td>PlasticsToday, Wevolver</td></tr>
+            <tr><td>HL-2</td><td>Less material than 1.5 × wall and 1.5 × D to the next hole or the edge</td><td>Warning</td><td>Wevolver</td></tr>
+            <tr><td>HL-3</td><td>Floor under a blind hole thinner than 0.2 × D</td><td>Warning</td><td>Wevolver</td></tr>
+            <tr><td>HL-4</td><td>Hole not along the opening (side hole)</td><td>Info (Error without side actions)</td><td>Envalior</td></tr>
+            <tr><td>HL-5</td><td>Weld line behind every cored hole</td><td>Info</td><td>Envalior</td></tr>
+          </table>
+          <p>Rib and boss roots, and the draft of ribs and bosses, are judged by their own rules (RB-3 / RB-4, BS-3 / BS-4) instead of the general corner and draft rules, so they are not reported twice. Not checked: RB-6 (tapered rib thickness changes).</p>
+          <table>
+            <tr><th colspan="4">Release 3 — gates, filling, ejection, warp</th></tr>
+            <tr><th>Rule</th><th>Check</th><th>Severity</th><th>Source</th></tr>
+            <tr><td>FL-1 · GS-2</td><td>Longest flow ÷ wall above the material's L/t (short shot; GS-2 when the last area is a thin rib)</td><td>Error</td><td>MoldMinds, Daya Machinery</td></tr>
+            <tr><td>FL-2</td><td>Flow above 80 % of the limit</td><td>Warning</td><td>MoldMinds</td></tr>
+            <tr><td>GT-1 · VD-2</td><td>Gate in a thin wall while the part has much thicker sections</td><td>Warning</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>GT-2</td><td>Your gate gives more than 1.25 × the flow of a central gate</td><td>Info</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>GT-3</td><td>Long, narrow part (over 4 : 1): consider a gate at one end</td><td>Info</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>GT-4</td><td>Gate on a rib, boss or hole, or on the show side of a cosmetic part</td><td>Warning</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>GT-6</td><td>More than one gate needed (KalpaXi proposes them)</td><td>Info</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>WL-1 · GT-5</td><td>Weld line on a boss (screw load) or on the show side</td><td>Warning</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>WL-2</td><td>Stress at a weld line above 75 % of yield (50 % glass-filled), from the stress results</td><td>Warning</td><td>Covestro</td></tr>
+            <tr><td>WL-3 · GS-1</td><td>Gas trap: last to fill at a rib / boss top or where fronts meet inside — vent it</td><td>Warning (Info on the outside edge)</td><td>Moldflow, Protolabs</td></tr>
+            <tr><td>WL-4</td><td>Weld line with its visible length</td><td>Info</td><td>Covestro</td></tr>
+            <tr><td>WL-5</td><td>Through-hole at the centre: a diaphragm gate avoids the weld line</td><td>Info</td><td>Covestro</td></tr>
+            <tr><td>EJ-1</td><td>A rib, boss or deep core wall with no flat landing spot nearby (and a summary of the proposed ejectors)</td><td>Warning</td><td>Fictiv, Protolabs</td></tr>
+            <tr><td>EJ-2</td><td>Cosmetic part: pin marks show on the ejection half</td><td>Info</td><td>Protolabs</td></tr>
+            <tr><td>EJ-3</td><td>Ejector sleeves for bosses, blades for ribs</td><td>Info</td><td>Fictiv</td></tr>
+            <tr><td>EJ-4</td><td>Pins landing on angled or curved faces</td><td>Info</td><td>Protolabs</td></tr>
+            <tr><td>EJ-5</td><td>Soft or sticky resin (TPE, TPU, PP, PE): more or wider pins</td><td>Info</td><td>Protolabs</td></tr>
+            <tr><td>WP-3</td><td>Flat panel span ÷ wall over 50</td><td>Warning</td><td>RJC Mold (limit: KalpaXi)</td></tr>
+            <tr><td>WP-4</td><td>Symmetric part, gating not symmetric</td><td>Info</td><td>Autodesk Moldflow</td></tr>
+            <tr><td>WP-5</td><td>Sharp inside corners also add curl and warp (shown with CR-1)</td><td>—</td><td>Protolabs</td></tr>
+          </table>
+          <p>Flow ratios L/t used: ABS 200, PC/ABS 130, PC 100, PP 250, HDPE / LDPE 230, PS 200, PA 200, PA glass-filled 130, POM 150, PMMA 130, PBT / PET 180, TPE / TPU 140 (MoldMinds). PP glass-filled (200), PBT glass-filled (130) and PPS (150) are KalpaXi's starting values — no published figure was found. Your resin's spiral-flow data always wins.</p>
+          <p>Not checked: weld lines behind blind cores and openings in curved walls, snap fits, living hinges, threads and text (SF, LH, TH, TX), tolerances (TL-1, TL-2).</p>
+          <div class="warn">The limits are typical published values. Your resin supplier's data sheet and your molder's experience come first — a check that passes here is not a guarantee, and a warning is a prompt to look, not a verdict. Parts made in KalpaXi have no draft until you add it, so expect DR-1 on vertical walls.</div>
+
+          <h3>Sources</h3>
+          <ul class="refs">
+            <li><a href="https://protolabs.com/services/injection-molding/plastic-injection-molding/design-guidelines" target="_blank" rel="noopener">Protolabs — Injection molding design guidelines</a> (draft, size limits)</li>
+            <li><a href="https://www.protolabs.com/resources/design-tips/improving-part-design-with-uniform-wall-thickness/" target="_blank" rel="noopener">Protolabs — Improving part design with uniform wall thickness</a></li>
+            <li><a href="https://www.protolabs.com/resources/design-tips/cutting-corners-on-injection-molded-parts/" target="_blank" rel="noopener">Protolabs — Cutting corners on injection-molded parts</a></li>
+            <li><a href="https://www.protolabs.com/resources/design-tips/6-ways-to-achieve-undercut-success-in-molded-parts/" target="_blank" rel="noopener">Protolabs — 6 ways to achieve undercut success</a></li>
+            <li><a href="https://www.protolabs.com/resources/guides-and-trend-reports/designing-for-moldability-complex-features/" target="_blank" rel="noopener">Protolabs — Designing for moldability: complex features</a></li>
+            <li><a href="https://www.fictiv.com/articles/draft-angle-injection-molding" target="_blank" rel="noopener">Fictiv — Draft angle in injection molding</a></li>
+            <li><a href="https://moldminds.com/blog/wall-thickness-injection-molding-guide/" target="_blank" rel="noopener">MoldMinds — Wall thickness guide by material</a></li>
+            <li><a href="https://rjcmold.com/guides/wall-thickness-design/" target="_blank" rel="noopener">RJC Mold — Wall thickness design</a>, <a href="https://rjcmold.com/guides/injection-molding-defects-and-solutions/" target="_blank" rel="noopener">Defects and solutions</a>, <a href="https://rjcmold.com/wp-content/uploads/Shrinkage-Rates-for-Common-Plastics.pdf" target="_blank" rel="noopener">Shrinkage rates</a></li>
+            <li><a href="https://solutions.covestro.com/-/media/covestro/solution-center/brands/downloads/imported/1557214249.pdf" target="_blank" rel="noopener">Covestro — Engineering Polymers: Part and Mold Design guide</a></li>
+            <li><a href="https://www.xometry.com/resources/injection-molding/plastic-ribs-for-injection-molding-design/" target="_blank" rel="noopener">Xometry — Plastic ribs for injection molding design</a></li>
+            <li><a href="https://help.autodesk.com/cloudhelp/2015/ENU/MoldflowAdvisor/files/GUID-CDD8CC94-4025-4D1B-AE09-E742BA0D633C.htm" target="_blank" rel="noopener">Autodesk Moldflow — Design rules of polymer injection locations</a></li>
+            <li><a href="https://solutions.covestro.com/-/media/covestro/solution-center/whitepapers/understanding-and-optimizing-weld-lines-in-thermoplastic-molding.pdf" target="_blank" rel="noopener">Covestro — Understanding and optimizing weld lines</a></li>
+            <li><a href="https://www.dayamachinery.com/flow-length-ratio-of-common-plastic/" target="_blank" rel="noopener">Daya Machinery — Flow length ratio of common plastics</a></li>
+            <li><a href="https://www.protolabs.com/resources/design-tips/using-ejector-pins-properly-on-molded-parts/" target="_blank" rel="noopener">Protolabs — Using ejector pins properly</a>, <a href="https://www.fictiv.com/articles/injection-molding-ejection-systems-design-guide" target="_blank" rel="noopener">Fictiv — Ejection systems design guide</a></li>
+            <li><a href="https://hlhrapid.com/knowledge/bosses-design-guide-injection-moulding/" target="_blank" rel="noopener">HLH — Bosses design guide</a></li>
+            <li><a href="https://www.plasticstoday.com/plastics-processing/by-design-part-design-304-depth-of-holes" target="_blank" rel="noopener">PlasticsToday — Depth of holes (Beall)</a>, <a href="https://www.wevolver.com/article/everything-you-need-to-know-about-injection-molded-holes" target="_blank" rel="noopener">Wevolver — Injection-molded holes</a>, <a href="https://www.envalior.com/en-us/services/design-guide/design-guidelines/holes.html" target="_blank" rel="noopener">Envalior — Holes</a></li>
+          </ul>
+          <p>The full rulebook (all rules including Releases 2–3, with the 26 references and noted gaps) is the "Injection Molding DFM Rulebook" document.</p>
+        </section>
+
+        <section id="cfd">
+          <h2>Flow and AI (frozen)</h2>
+          <div class="warn">The <span class="btn">Flow</span> and <span class="btn">AI</span> buttons are <b>frozen</b> (greyed out) in this release. Flow is described below for reference — it comes back once running SU2 and showing its results inside KalpaXi are finished. <b>AI</b> (after Mold) is a place-holder for an assistant that will come later.</div>
+          <h3>Flow (CFD) — SU2 input files</h3>
+          <p>The <span class="btn">Flow</span> button (top right) sets up a <b>steady, incompressible flow</b> of air, water or oil and writes the input files for the open-source CFD solver <b>SU2</b>: the fluid mesh <code>mesh.su2</code> and the case file <code>case.cfg</code>. Meshing uses Gmsh through the solver bridge, like the stress analysis. SU2 itself is only needed to run the files; the panel shows whether the bridge found it.</p>
+          <h4>Two kinds of flow</h4>
+          <table>
+            <tr><th>Flow</th><th>Fluid region</th><th>Boundaries</th></tr>
+            <tr><td><b>External</b> — air or water round a part</td><td>A wind-tunnel box round the chosen solid, with the solid taken out. Its size is set in part lengths L: <b>Upstream</b> (2 L), <b>Downstream</b> (5 L), <b>Sides</b> (2 L).</td><td>Automatic: <b>inlet</b> on the upstream face (uniform speed), <b>outlet</b> downstream (0 Pa), <b>farfield</b> slip walls on the four sides, <b>wall</b> (no-slip) on the part. Choose the <b>Flow direction</b> (±X/±Y/±Z) or right-click a face → <b>Flow along / against this face's normal</b>.</td></tr>
+            <tr><td><b>Internal</b> — flow through channels, pipes, manifolds</td><td>The chosen solid <i>is</i> the fluid: model the hollow inside as a solid (a Boolean Subtract of the part from a block, kept as a New solid, gives exactly this).</td><td>Right-click a face of the fluid → <b>Inlet (velocity)…</b> (m/s, into the fluid, normal to the face), <b>Outlet (pressure)</b> (Pa, gauge) or <b>Symmetry (slip wall)</b>. Every other face is a no-slip wall. Values can be changed in the panel's list.</td></tr>
+          </table>
+          <h4>Fluid and turbulence</h4>
+          <p>Pick a fluid (air or water at 20 / 60 °C, SAE 30 oil) or type your own <b>density</b> (kg/m³) and <b>viscosity</b> (Pa·s). The panel shows the <b>Reynolds number</b> Re = ρUL/μ (L = part length for external flow, the smallest size of the fluid region for internal flow) and says whether the flow is likely laminar or turbulent. <b>Turbulence</b>: Laminar, Spalart–Allmaras or k-ω SST. With a turbulence model it also shows an estimate of the first-cell <b>y+</b>; these models want y+ ≈ 1 at the walls.</p>
+          <h4>Mesh</h4>
+          <p><span class="btn">Generate fluid mesh</span> makes <b>first-order 4-node tetrahedra</b> (CFD codes use cells without mid-side nodes). Cells are small at the walls (<b>Wall cell size</b>) and grow by about 20 % per cell to the <b>Far-field size</b> (external) or <b>Core cell size</b> (internal); both are automatic unless you type them. The table under the mesh lists every boundary with its type, number of faces and area — check it before writing the files. Right-click → <b>Hide / Show the fluid mesh</b>.</p>
+          <h4>Writing and running</h4>
+          <ol>
+            <li>Set the <b>Iterations</b> limit (SU2 stops earlier when the drag — external — or the pressure drop — internal — has settled) and the <b>Folder</b>.</li>
+            <li><span class="btn">Write SU2 files</span> saves <code>case.cfg</code> and <code>mesh.su2</code> there (with <code>domain.step</code>, <code>domain.geo</code> and <code>domain.msh</code>). <span class="btn">Download</span> gives the two files without the folder.</li>
+            <li>Run SU2 in that folder: <code>SU2_CFD case.cfg</code>. Results: <code>flow.vtu</code> and <code>surface_flow.vtu</code> (open in ParaView), <code>history.csv</code> (residuals, drag CD and lift CL on the walls, average pressures and the pressure drop between inlet and outlet).</li>
+          </ol>
+          <p>The mesh is written in <b>metres</b> and the case in SI units (Pa, m/s, kg/m³). Force coefficients use the part's frontal area (external) or the inlet area (internal) as reference area.</p>
+          <div class="warn">This first CFD release writes the files; running SU2 from the panel and showing the results on the model come next. The fluid mesh is tetrahedra only — no prism layers at the walls yet — so pressure drop and pressure forces are good, but wall shear and drag of streamlined parts at high Reynolds numbers are approximate. Checked: laminar pipe flow gives the Hagen–Poiseuille pressure drop (plus the entrance loss) within 2 %.</div>
+        </section>
+
+        <div class="chapter" id="ch-ref"><span>Reference</span><p>Menus, files, keys, troubleshooting and credits.</p></div>
+
+        <section id="rightclick">
+          <h2>Right-click menus</h2>
+          <table>
+            <tr><th>Right-click on…</th><th>Menu</th></tr>
+            <tr><td>An edge of the solid</td><td>Fillet, Chamfer</td></tr>
+            <tr><td>A flat face</td><td>New sketch on this face, <b>Normal view</b>, Create a plane…, Extrude this face, Cut into this face, Move the solid, Boolean with another solid (with several solids), <b>Cut another solid with this face's plane…</b>, Properties, Face colour, <b>Solid colour</b> (that solid only). The title shows the solid, e.g. “Face · Solid 2 · Bracket”.</td></tr>
+            <tr><td>A curved face</td><td>Create a plane…, <b>Normal view</b>, Face colour, Solid colour</td></tr>
+            <tr><td>A datum plane (XY / XZ / YZ or your own)</td><td>New sketch on that plane, <b>Normal view</b>, <b>Cut a solid with this plane…</b> (<a href="#cutsurface">Cut by surface</a>); Delete this plane (your own planes); <b>Show all solids</b> when some are hidden</td></tr>
+            <tr><td>A solid in the Solids list</td><td>Rename…, Hide / Show, Make transparent, Lock / Unlock, Save as / Export…, Delete</td></tr>
+            <tr><td>A part in an assembly deck</td><td>Move, Normal view, Section view</td></tr>
+            <tr><td>A drawing view</td><td>Show / Hide hidden lines, Section — horizontal / vertical cut, Flip the looking direction (sections), Detail view, Delete view</td></tr>
+            <tr><td>A drawing dimension / note</td><td>Text / tolerance…, arrows inside / outside / automatic, Text back in place, Delete; notes: Edit text…, Put back above the parts list</td></tr>
+            <tr><td>The model, while Mesh&amp;FEM is open</td><td>Fixed support, Force…, Pressure…, Thermal (surface temperature, convection, heat flux, radiation), <b>Mesh</b> (generate, show elements / nodes, select nodes on this face / line, <b>Reselect nodes (window)</b>, create node group, clear) and <b>DOF on nodes</b> (Displacement…, Force…, thermal)</td></tr>
+            <tr><td>Empty space in an assembly deck</td><td>Pull component…, Section view, Fit view, standard views</td></tr>
+            <tr><td>A deck tab (bottom left)</td><td>Rename…, Delete this deck</td></tr>
+            <tr><td>During a section, shell or joint step</td><td>That step's commands, e.g. <b>Set section plane</b>, Done, Cancel</td></tr>
+            <tr><td>Empty space</td><td>New sketch, Extrude, Cut, Revolve, Fillet, Chamfer, Boolean (Combine / Subtract / Cut by surface)…, views, undo/redo, save, export</td></tr>
+            <tr><td>The part, while the molding check is open</td><td>Open the mold along / against this face's normal, Reverse the opening direction, Let KalpaXi propose the direction, <b>Put a gate here</b>, Clear my gates, the colour maps (incl. Features and Fill), Run again, Close</td></tr>
+            <tr><td>Anywhere while sketching</td><td>All drawing, editing, constraint and dimension commands, and Finish sketch</td></tr>
+          </table>
+          <p>Right-<b>dragging</b> pans (or turns the view while sketching or in a step) — the menu only opens on a click.</p>
+        </section>
+
+        <section id="files">
+          <h2>Saving, opening, exporting</h2>
+          <table>
+            <tr><th>Button</th><th>What it does</th></tr>
+            <tr><td><span class="btn">Save</span> <kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Saves the project as a <code>.kxi</code> file (the full editable history). After a <b>Save as</b> into a chosen folder, Save writes to that same file again; otherwise it downloads.</td></tr>
+            <tr><td><span class="btn">Save as</span> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td>Opens the <b>Save as / Export</b> window (below): file name, folder, file type <b>.kxi</b> or <b>STEP</b>, and whether to save the whole model or one solid.</td></tr>
+            <tr><td><span class="btn">Open</span></td><td>Loads a <code>.kxi</code> file. The file window's type list has <b>KalpaXi project (*.kxi)</b> and <b>All files</b>.</td></tr>
+            <tr><td><span class="btn">Close</span></td><td>Closes the current project and leaves an empty, untitled model (asks first if there are unsaved changes).</td></tr>
+            <tr><td><span class="btn">Export</span></td><td><b>STEP</b> (exact solid for other CAD programs), <b>STL</b> (3D printing), <b>DXF</b> (the selected sketch, for laser/CNC), <b>PNG</b> (picture of the view).</td></tr>
+            <tr><td><span class="btn">Import</span></td><td>A menu with the two file types:<br>• <b>KalpaXi project (.kxi)</b> — open it for editing (replaces the current project);<br>• <b>KalpaXi project as a solid</b> — rebuild that project and add its solid to the current model;<br>• <b>STEP (.step / .stp)</b> — add a STEP solid to the current model.</td></tr>
+            <tr><td><span class="btn">New</span></td><td>Starts an empty project. A window asks for the <b>Project name</b> and where to keep it — <b>Choose folder…</b>, as in Save as. With a folder, the project file is created there at once and <b>Save</b> keeps writing to it; without one, Save downloads the file.</td></tr>
+            <tr><td><span class="btn">Section</span></td><td>Section view — see <a href="#section">Section view</a>.</td></tr>
+            <tr><td><span class="btn">Mesh&amp;FEM</span></td><td>Mesh, supports, loads, run CalculiX — see <a href="#fea">Mesh &amp; FEM</a>. The analysis tools are greyed out inside an assembly deck or a drawing.</td></tr>
+            <tr><td><span class="btn">Results</span></td><td>Plot the results of any study — see <a href="#results">Results</a>.</td></tr>
+            <tr><td><span class="btn">Fatigue</span></td><td>Damage and life with pyLife — see <a href="#fatigue">Fatigue</a>.</td></tr>
+            <tr><td><span class="btn">Mold</span></td><td>Molding check — see <a href="#mold">Molding check</a>.</td></tr>
+            <tr><td><span class="btn">Flow</span> <span class="btn">AI</span></td><td>Frozen for now (greyed out) — see <a href="#cfd">Flow and AI</a>.</td></tr>
+          </table>
+          <h3>The Save as / Export window</h3>
+          <p>Open it from the <span class="btn">Save as</span> button, from right-click on a face → <b>Save as / Export…</b> (that solid is pre-selected, as STEP), or from the export icon next to a solid in the <b>Solids</b> list.</p>
+          <table>
+            <tr><th>Field</th><th>Meaning</th></tr>
+            <tr><td>File name</td><td>Name without extension; the line at the bottom shows the final file name.</td></tr>
+            <tr><td>Save as type</td><td><b>KalpaXi project (*.kxi)</b> or <b>STEP (*.step)</b>.</td></tr>
+            <tr><td>Contents</td><td><b>Whole model</b> or one solid (<b>Solid 1</b>, <b>Solid 2</b>, …). A whole-model .kxi is fully editable. A single solid saved as .kxi holds that solid as fixed (imported) geometry with its material — not its sketches.</td></tr>
+            <tr><td>Save in</td><td><b>Choose folder…</b> picks the folder (Chrome and Edge; the browser asks once to allow editing files there). Without a folder, or in Firefox / Safari, the file goes to the browser's download folder — turn on “Ask where to save each file” in the browser settings to be asked every time.</td></tr>
+          </table>
+          <h3>Solid numbers</h3>
+          <p>Every separate solid gets a number, shown as an orange tag on the model and in the <b>Solids</b> list under the feature tree. A solid keeps its number when you edit, rebuild, save and reopen; a new solid gets the next number (several new ones are numbered left to right). Click a solid in the list for its properties; the <span class="btn"># Solids</span> button at the top right of the view hides or shows the tags.</p>
+          <p>Each row of the <b>Solids</b> list has five buttons: <b>eye</b> — hide / unhide the solid; <b>two squares</b> — transparent / opaque; <b>padlock</b> — lock (see <a href="#solids">Solids</a>); <b>arrow</b> — Save as / Export; <b>bin</b> — delete the solid. Right-click a solid in the list for the same commands and <b>Rename…</b>. A hidden solid can't be clicked in the view (its number tag turns grey); bring it back with its eye button or right-click empty space or a plane → <b>Show all solids</b>. Hiding and transparency only change the view — the solid is still part of the model, its mass and its exports — and they are saved in the project.</p>
+          <h3>Deleting a solid</h3>
+          <p>Click the <b>bin</b> button of a solid in the <b>Solids</b> list (or right-click it there → <b>Delete</b>). A locked solid must be unlocked first. A warning window lists every feature that will be removed — the extrudes, revolves, imports, <b>cuts</b>, <b>fillets</b>, <b>chamfers</b> and moves that build that solid, and the <b>sketches</b> they use — and asks you to confirm with <b>Delete</b> (Cancel or <kbd>Esc</kbd> keeps everything).</p>
+          <ul>
+            <li>A fillet or chamfer that also rounds edges of other solids is kept; only this solid's edges are taken out of it.</li>
+            <li>A cut that also cuts other solids is kept.</li>
+            <li>If one extrude built this solid <i>and</i> another one (for example one sketch with two separate shapes), the window warns that the other solid will be deleted too.</li>
+            <li>A sketch is deleted only when nothing else uses it.</li>
+            <li>The other solids keep their numbers. Undo (<kbd>Ctrl</kbd>+<kbd>Z</kbd>) brings everything back.</li>
+            <li><b>Solids from a Boolean:</b> deleting a kept original switches off its <b>Keep</b> option in that Boolean (the Boolean uses it up). Deleting a Boolean's result deletes the Boolean feature when both originals were kept; otherwise the Boolean is marked “result deleted” (its panel has <b>Bring back</b>). A solid made by a <b>New solid</b> extrude goes with that extrude and its sketch.</li>
+          </ul>
+          <div class="warn">Your work is also <b>autosaved in this browser</b> and restored when you reopen the page — but clearing browser data removes it. Use <b>Save</b> for real backups.</div>
+        </section>
+
+        <section id="keys">
+          <h2>Keyboard shortcuts</h2>
+          <table>
+            <tr><th>Anywhere</th><th></th></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Undo / redo</td></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save project</td></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td>Save as / Export…</td></tr>
+            <tr><td><kbd>F</kbd></td><td>Fit view</td></tr>
+            <tr><td><kbd>F1</kbd></td><td>This help</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Cancel / clear selection / close menu</td></tr>
+            <tr><td>Middle mouse click</td><td>Finish / Done of the current step (sketch, depth, move, edges, shell, plane, section, part move)</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Finish / Done of the current step</td></tr>
+          </table>
+          <table>
+            <tr><th>Part mode</th><th></th></tr>
+            <tr><td><kbd>K</kbd></td><td>New sketch (on the selected face/plane, if any)</td></tr>
+            <tr><td><kbd>E</kbd></td><td>Extrude</td></tr>
+            <tr><td><kbd>Del</kbd></td><td>Delete the selected feature</td></tr>
+          </table>
+          <table>
+            <tr><th>Drawing</th><th></th></tr>
+            <tr><td><kbd>Del</kbd></td><td>Delete the selected view, dimension, note or parts list</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>End the current tool</td></tr>
+            <tr><td>Wheel · right / middle drag</td><td>Zoom · pan the sheet</td></tr>
+          </table>
+          <table>
+            <tr><th>Assembly deck</th><th></th></tr>
+            <tr><td><kbd>Del</kbd></td><td>Remove the picked component from the deck</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Deselect; cancel a joint or a move</td></tr>
+            <tr><td><kbd>Shift</kbd> while dragging</td><td>Turn instead of slide (cylindrical, planar joints)</td></tr>
+          </table>
+          <table>
+            <tr><th>Sketch mode</th><th></th></tr>
+            <tr><td><kbd>S</kbd> <kbd>L</kbd> <kbd>R</kbd> <kbd>C</kbd> <kbd>A</kbd> <kbd>B</kbd> <kbd>P</kbd></td><td>Select, Line, Rectangle, Circle, Arc, B-spline, Point</td></tr>
+            <tr><td><kbd>X</kbd> <kbd>W</kbd> <kbd>J</kbd> <kbd>U</kbd></td><td>Trim, Extend, Join corner, Project</td></tr>
+            <tr><td><kbd>D</kbd> <kbd>N</kbd> <kbd>Shift</kbd>+<kbd>H</kbd> <kbd>Shift</kbd>+<kbd>V</kbd></td><td>Dimension, Angle, Horizontal / Vertical dimension</td></tr>
+            <tr><td><kbd>H</kbd> <kbd>V</kbd> <kbd>E</kbd> <kbd>T</kbd> <kbd>O</kbd></td><td>Horizontal, Vertical, Equal, Tangent, On curve</td></tr>
+            <tr><td><kbd>G</kbd></td><td>Construction on/off</td></tr>
+            <tr><td><kbd>Del</kbd></td><td>Delete selection</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Finish a B-spline</td></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Finish the sketch</td></tr>
+          </table>
+        </section>
+
+        <section id="problems">
+          <h2>When something goes wrong</h2>
+          <table>
+            <tr><th>Message / problem</th><th>What to do</th></tr>
+            <tr><td>"The sketch has no closed profile"</td><td>The shape has a gap. Look for an end point that isn't joined — drag it onto the neighbouring point, or use <b>Join corner</b>. Closed areas are shaded blue.</td></tr>
+            <tr><td>"That would conflict with existing constraints"</td><td>The new rule contradicts another one (e.g. a locked length). Unlock or delete the other dimension first.</td></tr>
+            <tr><td>Red constraint markers</td><td>The sketch can't be solved — remove one of the red constraints listed in the panel.</td></tr>
+            <tr><td>"OpenCascade could not create this fillet"</td><td>The radius is too large for that edge — try a smaller size or fewer edges.</td></tr>
+            <tr><td>A feature shows a ⚠ in the Model list</td><td>Click it to read the reason in the panel. Often an earlier sketch changed — edit the feature or re-pick its edges.</td></tr>
+            <tr><td>"The shell can't be made with … walls"</td><td>The inside walls would run into a hole, pocket or round. Use a thinner wall, or switch off that feature.</td></tr>
+            <tr><td>"… belongs to Solid N, which is locked"</td><td>Unlock the solid with its padlock button in the Solids list.</td></tr>
+            <tr><td>"… is already placed by …" (assembly)</td><td>A part can have one placing joint. Delete that joint first, or pick another part to move.</td></tr>
+            <tr><td>Part of the model is missing</td><td>A section may be on: open <span class="btn">Section</span> and untick it (or <b>All off</b>).</td></tr>
+            <tr><td>"The cutting surface doesn't pass through the solid" / "… must form one open chain"</td><td>Cut by surface: move the plane or line so it crosses the part; the sketch must have one open line chain (no closed outline, no branch).</td></tr>
+            <tr><td>"pyLife does not import in …" (Fatigue)</td><td>Run the two <code>pip install</code> commands the panel shows — for <b>that</b> Python, with <code>--no-deps</code> — then ⟳. Or set <code>"python"</code> in <code>bridge/config.json</code> to the Python that has pyLife and restart.</td></tr>
+            <tr><td>"The solver bridge is not running"</td><td>Start KalpaXi with <code>KalpaXi.bat</code> / <code>kalpaxi.sh</code> (or <code>npm run solver</code>) and keep its window open.</td></tr>
+            <tr><td>"Add a load first" / "Add a support first"</td><td>A stress study needs at least one support (a face or a node group with a displacement) and one load (force, pressure, gravity, a node-group force, or a temperature).</td></tr>
+            <tr><td>The model disappeared</td><td>Press <kbd>F</kbd> (Fit) or click <span class="btn">Iso</span>. In a deck, check the component isn't hidden.</td></tr>
+          </table>
+        </section>
+
+        <section id="opensource">
+          <h2>Open-source acknowledgements</h2>
+          <div class="thanks"><b>KalpaXi is built on open-source software.</b> The geometry kernel, the sketch solver, the 3D view, the mesher, the FEA solver and the fatigue library are all made and shared freely by people and companies around the world. Thank you to everyone who writes, tests and maintains them. If KalpaXi is useful to you, please support these projects too — use them, report bugs, contribute fixes, cite them in your work, or sponsor them. Open source works when we all give a little back.</div>
+          <h3>Inside KalpaXi (shipped with the app)</h3>
+          <table class="lic-table">
+            <tr><th>Project</th><th>What it does here</th><th>Licence</th><th>Licence text</th></tr>
+            <tr><td><a href="https://dev.opencascade.org" target="_blank" rel="noopener">Open CASCADE Technology</a> (as WebAssembly by <a href="https://github.com/sgenoud/replicad" target="_blank" rel="noopener">replicad-opencascadejs</a>) — © Open Cascade SAS and contributors</td><td>The 3D geometry kernel: solids, Booleans, cuts, fillets, shells, STEP, drawing projections</td><td>LGPL-2.1</td><td><a href="licenses/OpenCascade-replicad-opencascadejs-LGPL-2.1.txt" target="_blank">LGPL-2.1</a></td></tr>
+            <tr><td><a href="https://replicad.xyz" target="_blank" rel="noopener">replicad</a> — © 2023 QuaroTech Sàrl (Steve Genoud)</td><td>The modelling library on top of OpenCascade</td><td>MIT</td><td><a href="licenses/replicad-MIT.txt" target="_blank">MIT</a></td></tr>
+            <tr><td><a href="https://github.com/Salusoft89/planegcs" target="_blank" rel="noopener">PlaneGCS</a> — FreeCAD's 2D constraint solver, © the FreeCAD contributors, packaged by Salusoft89</td><td>Sketch constraints and dimensions</td><td>LGPL-2.0+</td><td><a href="licenses/PlaneGCS-LGPL-2.1.txt" target="_blank">LGPL-2.1</a></td></tr>
+            <tr><td><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> — © 2010–2026 three.js authors</td><td>The 3D view, picking and labels</td><td>MIT</td><td><a href="licenses/three.js-MIT.txt" target="_blank">MIT</a></td></tr>
+            <tr><td><a href="https://opentype.js.org" target="_blank" rel="noopener">opentype.js</a> — © 2020 Frederik De Bleser</td><td>Reading fonts (used by replicad)</td><td>MIT</td><td><a href="licenses/opentype.js-MIT.txt" target="_blank">MIT</a></td></tr>
+            <tr><td><a href="https://github.com/mourner/flatbush" target="_blank" rel="noopener">flatbush</a> and <a href="https://github.com/mourner/flatqueue" target="_blank" rel="noopener">flatqueue</a> — © Vladimir Agafonkin</td><td>Fast spatial search (used by replicad)</td><td>ISC</td><td><a href="licenses/flatbush-ISC.txt" target="_blank">flatbush</a>, <a href="licenses/flatqueue-ISC.txt" target="_blank">flatqueue</a></td></tr>
+            <tr><td><a href="https://github.com/foliojs/tiny-inflate" target="_blank" rel="noopener">tiny-inflate</a> — © Devon Govett; <a href="https://github.com/mathiasbynens/String.prototype.codePointAt" target="_blank" rel="noopener">String.prototype.codePointAt</a> — © Mathias Bynens</td><td>Helpers used by opentype.js</td><td>MIT</td><td><a href="licenses/tiny-inflate-MIT.txt" target="_blank">tiny-inflate</a>, <a href="licenses/string.prototype.codepointat-MIT.txt" target="_blank">codePointAt</a></td></tr>
+            <tr><td><a href="https://github.com/JulietaUla/Montserrat" target="_blank" rel="noopener">Montserrat</a> font — © The Montserrat Project Authors</td><td>Lettering of the logo tagline on the start-up picture</td><td>SIL OFL 1.1</td><td><a href="licenses/Montserrat-OFL-1.1.txt" target="_blank">OFL-1.1</a></td></tr>
+          </table>
+          <p>OpenCascade and PlaneGCS are used <b>unmodified</b>, as separate WebAssembly files that can be replaced by another build of the same library; their source code is at the links above.</p>
+          <h3>Programs KalpaXi works with (you install them)</h3>
+          <table class="lic-table">
+            <tr><th>Program</th><th>What it does here</th><th>Licence</th><th>Licence text</th></tr>
+            <tr><td><a href="http://www.calculix.de" target="_blank" rel="noopener">CalculiX</a> (ccx) — © Guido Dhondt</td><td>The FEA solver: stress, thermal, coupled</td><td>GPL-2.0</td><td><a href="licenses/GPL-2.0-Gmsh-CalculiX.txt" target="_blank">GPL-2.0</a></td></tr>
+            <tr><td><a href="https://gmsh.info" target="_blank" rel="noopener">Gmsh</a> — © Christophe Geuzaine and Jean-François Remacle</td><td>The tetrahedral mesher (Mesh, Flow)</td><td>GPL-2.0+</td><td><a href="licenses/GPL-2.0-Gmsh-CalculiX.txt" target="_blank">GPL-2.0</a></td></tr>
+            <tr><td><a href="https://github.com/boschresearch/pylife" target="_blank" rel="noopener">pyLife</a> — © Robert Bosch GmbH and the pyLife authors</td><td>Fatigue: Wöhler curve, rainflow, mean stress, Miner</td><td>Apache-2.0</td><td><a href="licenses/pyLife-Apache-2.0.txt" target="_blank">Apache-2.0</a>, <a href="licenses/pyLife-NOTICE.txt" target="_blank">NOTICE</a></td></tr>
+            <tr><td><a href="https://numpy.org" target="_blank" rel="noopener">NumPy</a>, <a href="https://scipy.org" target="_blank" rel="noopener">SciPy</a>, <a href="https://pandas.pydata.org" target="_blank" rel="noopener">pandas</a></td><td>Numbers and tables for the fatigue script</td><td>BSD-3-Clause</td><td>at each project</td></tr>
+            <tr><td><a href="https://www.python.org" target="_blank" rel="noopener">Python</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a></td><td>Run the fatigue script · run the solver bridge</td><td>PSF · MIT</td><td>at each project</td></tr>
+            <tr><td><a href="https://www.freecad.org" target="_blank" rel="noopener">FreeCAD</a> (optional — brings CalculiX and Gmsh)</td><td>—</td><td>LGPL-2.0+</td><td>freecad.org</td></tr>
+            <tr><td><a href="https://su2code.github.io" target="_blank" rel="noopener">SU2</a> (Flow — frozen)</td><td>CFD solver for the written case files</td><td>LGPL-2.1</td><td>su2code.github.io</td></tr>
+          </table>
+          <p>Built with <a href="https://vite.dev" target="_blank" rel="noopener">Vite</a> (MIT) and <a href="https://www.typescriptlang.org" target="_blank" rel="noopener">TypeScript</a> (Apache-2.0); tested with <a href="https://playwright.dev" target="_blank" rel="noopener">Playwright</a> (Apache-2.0). The full list with versions is in <code>THIRD-PARTY-NOTICES.md</code> in the KalpaXi folder.</p>
+          <h3>Why this matters — and what you can do</h3>
+          <ul>
+            <li><b>Free to use, study, change and share.</b> These licences let anyone — students, small workshops, big companies — use world-class engineering software without licence fees.</li>
+            <li><b>Keep the notices.</b> If you pass KalpaXi on, keep the <code>licenses</code> folder and <code>THIRD-PARTY-NOTICES.md</code> with it. If you change OpenCascade or PlaneGCS, share your changes under the LGPL; if you bundle CalculiX or Gmsh, include their GPL text and source link.</li>
+            <li><b>Give back.</b> Star, cite, report a bug, write documentation, answer a question in a forum, or sponsor a project you rely on.</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
