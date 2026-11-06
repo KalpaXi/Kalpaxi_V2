@@ -4,9 +4,10 @@ How to install KalpaXi on your computer.
 
 Download the KalpaXi-V2.1-Setup-x64 from repository.
 
-If you see some error while registration 
-Press the Windows key, type cmd, and open Command Prompt.
+If you see some error while registration, Press the Windows key, type cmd, and open Command Prompt.
+
 Paste this and press Enter: "setx KALPAXI_REGISTRATION off"
+
 Close KalpaXi completely and open it again. It goes straight in without the setup window.
 
 ## System requirements
