@@ -1,0 +1,33 @@
+# Documentation site settings (for publishing later with MkDocs Material)
+site_name: KalpaXi Documentation
+site_url: https://kalpaxi.in/docs/
+repo_url: https://github.com/KalpaXi/KalpaXi_V2
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Registration: getting-started/registration.md
+      - The KalpaXi window: getting-started/interface.md
+  - Quick start: tutorials/quick-start.md
+  - User guide:
+      - Part modelling: user-guide/part-modelling.md
+      - Assembly: user-guide/assembly.md
+      - Drawing: user-guide/drawing.md
+      - Tolerances and fits: user-guide/tolerances-and-fits.md
+      - Stress analysis: user-guide/stress-analysis.md
+      - Thermal analysis: user-guide/thermal-analysis.md
+      - Fatigue: user-guide/fatigue.md
+      - Injection molding: user-guide/injection-molding.md
+      - Manufacturability (DFM): user-guide/dfm.md
+  - Validation:
+      - Overview: validation/index.md
+      - Cantilever beam: validation/beam-bending.md
+      - Plate with a hole: validation/plate-with-hole.md
+      - Thermal bar: validation/thermal-bar.md
+      - Fatigue example: validation/fatigue-example.md
+  - Reference:
+      - Theory: reference/theory.md
+      - File formats: reference/file-formats.md
+  - Troubleshooting: troubleshooting/faq.md
